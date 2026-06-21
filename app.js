@@ -1,0 +1,336 @@
+const modules = [
+  {
+    id: "algebra",
+    title: "Лінійні та квадратні рівняння",
+    level: "Базовий курс",
+    summary: "Опрацювання типових алгоритмів: спрощення виразів, перенесення доданків, дискримінант і перевірка коренів.",
+    outcomes: [
+      "Студент розпізнає тип рівняння і добирає відповідний метод.",
+      "Система показує послідовність кроків, а не лише фінальний результат.",
+      "Практичні задачі оцінюють не тільки відповідь, а й логіку розв'язання."
+    ]
+  },
+  {
+    id: "functions",
+    title: "Функції та графічне мислення",
+    level: "Середній рівень",
+    summary: "Вивчення області визначення, нулів функції, проміжків зростання і побудови простих графіків.",
+    outcomes: [
+      "Користувач вчиться пов'язувати формулу з поведінкою графіка.",
+      "Алгоритм розв'язання містить пояснення кожного перетворення.",
+      "Модуль формує візуальну інтуїцію щодо властивостей функцій."
+    ]
+  },
+  {
+    id: "geometry",
+    title: "Планіметрія та прикладна геометрія",
+    level: "Підвищений рівень",
+    summary: "Розв'язання задач на площі, периметри, подібність трикутників і практичне застосування формул.",
+    outcomes: [
+      "Кожна задача починається з аналізу умови та побудови моделі.",
+      "Підказки допомагають виділяти відомі й невідомі величини.",
+      "Система пропонує шаблони міркувань для типових геометричних сюжетів."
+    ]
+  },
+  {
+    id: "exam",
+    title: "Тренажер підготовки до контролю",
+    level: "Адаптивний режим",
+    summary: "Сценарії повторення тем, накопичення балів, рекомендації для слабких місць і збереження особистого прогресу.",
+    outcomes: [
+      "Застосунок формує індивідуальну траєкторію повторення.",
+      "Аналітика показує, які теми потрібно опрацювати ще раз.",
+      "Механіка мотивації підтримує регулярну самостійну роботу."
+    ]
+  }
+];
+
+const problems = [
+  {
+    id: "eq-1",
+    topic: "Лінійні рівняння",
+    level: "Легкий",
+    title: "Знайдіть x у рівнянні",
+    prompt: "2x + 7 = 19",
+    answer: "x = 6",
+    variants: ["6", "x=6", "x = 6"],
+    steps: [
+      {
+        title: "Проаналізуйте структуру рівняння",
+        description: "У рівнянні є одна змінна і лінійна залежність, тому ізолюємо x.",
+        tip: "Працюйте симетрично з обома частинами рівняння."
+      },
+      {
+        title: "Перенесіть вільний член",
+        description: "Відніміть 7 від лівої та правої частини: 2x = 12.",
+        tip: "Так ми прибираємо зайвий доданок біля змінної."
+      },
+      {
+        title: "Знайдіть значення змінної",
+        description: "Поділіть обидві частини на 2 і отримаєте x = 6.",
+        tip: "Завжди перевіряйте підстановкою у вихідне рівняння."
+      }
+    ]
+  },
+  {
+    id: "eq-2",
+    topic: "Квадратні рівняння",
+    level: "Середній",
+    title: "Розв'яжіть квадратне рівняння",
+    prompt: "x^2 - 5x + 6 = 0",
+    answer: "x1 = 2, x2 = 3",
+    variants: ["2,3", "x1=2 x2=3", "x1 = 2, x2 = 3", "2 і 3"],
+    steps: [
+      {
+        title: "Визначте коефіцієнти",
+        description: "Для рівняння маємо a = 1, b = -5, c = 6.",
+        tip: "Коректні коефіцієнти потрібні для обчислення дискримінанта."
+      },
+      {
+        title: "Обчисліть дискримінант",
+        description: "D = b^2 - 4ac = 25 - 24 = 1.",
+        tip: "Додатний дискримінант означає два різні дійсні корені."
+      },
+      {
+        title: "Знайдіть корені",
+        description: "x1 = (5 - 1) / 2 = 2, x2 = (5 + 1) / 2 = 3.",
+        tip: "Після обчислення варто коротко перевірити суму та добуток коренів."
+      }
+    ]
+  },
+  {
+    id: "fn-1",
+    topic: "Функції",
+    level: "Середній",
+    title: "Нулі функції",
+    prompt: "Знайдіть нуль функції y = 3x - 9",
+    answer: "x = 3",
+    variants: ["3", "x=3", "x = 3"],
+    steps: [
+      {
+        title: "Прирівняйте функцію до нуля",
+        description: "Щоб знайти нуль функції, потрібно розв'язати рівняння 3x - 9 = 0.",
+        tip: "Нуль функції означає значення x, при якому y дорівнює нулю."
+      },
+      {
+        title: "Перенесіть вільний член",
+        description: "Отримаємо 3x = 9 після додавання 9 до обох частин.",
+        tip: "Зручніше спочатку позбутися константи."
+      },
+      {
+        title: "Поділіть на коефіцієнт",
+        description: "Ділимо обидві частини на 3 та маємо x = 3.",
+        tip: "Це і є координата точки перетину графіка з віссю Ox."
+      }
+    ]
+  },
+  {
+    id: "geo-1",
+    topic: "Геометрія",
+    level: "Легкий",
+    title: "Площа прямокутника",
+    prompt: "Знайдіть площу прямокутника зі сторонами 5 см і 8 см",
+    answer: "40",
+    variants: ["40", "40 см2", "40 см^2"],
+    steps: [
+      {
+        title: "Визначте відомі величини",
+        description: "Відомі довжина та ширина прямокутника: 5 см і 8 см.",
+        tip: "Це базова задача на застосування формули площі."
+      },
+      {
+        title: "Застосуйте формулу",
+        description: "Площа прямокутника S = a * b.",
+        tip: "Перемножте дві сторони фігури."
+      },
+      {
+        title: "Обчисліть результат",
+        description: "S = 5 * 8 = 40 см².",
+        tip: "Не забудьте зазначити одиниці вимірювання у письмовому розв'язанні."
+      }
+    ]
+  }
+];
+
+const storageKey = "mathmentor-flow-progress";
+const savedState = JSON.parse(localStorage.getItem(storageKey) || '{"completed":[],"checked":0}');
+const state = {
+  activeModule: modules[0].id,
+  activeProblemId: problems[0].id,
+  stepIndex: 0,
+  completed: Array.isArray(savedState.completed) ? savedState.completed : [],
+  checked: Number.isFinite(savedState.checked) ? savedState.checked : 0
+};
+
+const moduleList = document.querySelector("#module-list");
+const moduleDetail = document.querySelector("#module-detail");
+const workspaceTitle = document.querySelector("#workspace-title");
+const workspaceProblem = document.querySelector("#workspace-problem");
+const workspaceTopic = document.querySelector("#workspace-topic");
+const workspaceLevel = document.querySelector("#workspace-level");
+const stepIndicator = document.querySelector("#step-indicator");
+const stepTitle = document.querySelector("#step-title");
+const stepDescription = document.querySelector("#step-description");
+const stepTip = document.querySelector("#step-tip");
+const problemSelect = document.querySelector("#problem-select");
+const answerInput = document.querySelector("#answer-input");
+const feedbackBox = document.querySelector("#feedback-box");
+const progressValue = document.querySelector("#progress-value");
+const progressFill = document.querySelector("#progress-fill");
+const progressSummary = document.querySelector("#progress-summary");
+const metricProgress = document.querySelector("#metric-progress");
+const prevStepButton = document.querySelector("#prev-step");
+const nextStepButton = document.querySelector("#next-step");
+
+function persistState() {
+  localStorage.setItem(storageKey, JSON.stringify({
+    completed: state.completed,
+    checked: state.checked
+  }));
+}
+
+function getProblemById(problemId) {
+  return problems.find((problem) => problem.id === problemId) || problems[0];
+}
+
+function renderModules() {
+  moduleList.innerHTML = modules.map((module) => `
+    <button class="module-card ${module.id === state.activeModule ? "active" : ""}" data-module-id="${module.id}">
+      <p class="section-tag">${module.level}</p>
+      <h4>${module.title}</h4>
+      <p>${module.summary}</p>
+      <span class="module-card-meta">Навчальна ціль</span>
+    </button>
+  `).join("");
+
+  const activeModule = modules.find((module) => module.id === state.activeModule) || modules[0];
+  moduleDetail.innerHTML = `
+    <p class="section-tag">Опис модуля</p>
+    <h4>${activeModule.title}</h4>
+    <p>${activeModule.summary}</p>
+    <ul class="detail-list">
+      ${activeModule.outcomes.map((outcome) => `<li>${outcome}</li>`).join("")}
+    </ul>
+  `;
+}
+
+function renderProblemSelect() {
+  problemSelect.innerHTML = problems.map((problem) => `
+    <option value="${problem.id}" ${problem.id === state.activeProblemId ? "selected" : ""}>
+      ${problem.topic}: ${problem.prompt}
+    </option>
+  `).join("");
+}
+
+function renderWorkspace() {
+  const problem = getProblemById(state.activeProblemId);
+  const currentStep = problem.steps[state.stepIndex];
+
+  workspaceTitle.textContent = problem.title;
+  workspaceProblem.textContent = problem.prompt;
+  workspaceTopic.textContent = problem.topic;
+  workspaceLevel.textContent = problem.level;
+  stepIndicator.textContent = `Крок ${state.stepIndex + 1} із ${problem.steps.length}`;
+  stepTitle.textContent = currentStep.title;
+  stepDescription.textContent = currentStep.description;
+  stepTip.textContent = currentStep.tip;
+
+  prevStepButton.disabled = state.stepIndex === 0;
+  nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
+}
+
+function normalizeAnswer(value) {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function updateProgress() {
+  const percent = Math.round((state.completed.length / problems.length) * 100);
+  progressValue.textContent = `${percent}%`;
+  metricProgress.textContent = `${percent}%`;
+  progressFill.style.width = `${percent}%`;
+
+  if (!state.completed.length) {
+    progressSummary.textContent = "Ще не розпочато жодної задачі.";
+    return;
+  }
+
+  progressSummary.textContent = `Опрацьовано ${state.completed.length} з ${problems.length} задач. Перевірок виконано: ${state.checked}.`;
+}
+
+function setFeedback(kind, text) {
+  feedbackBox.className = `feedback-box ${kind}`;
+  feedbackBox.textContent = text;
+}
+
+function markCurrentProblemComplete() {
+  if (!state.completed.includes(state.activeProblemId)) {
+    state.completed.push(state.activeProblemId);
+    persistState();
+    updateProgress();
+  }
+}
+
+moduleList?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-module-id]");
+  if (!button) {
+    return;
+  }
+
+  state.activeModule = button.dataset.moduleId;
+  renderModules();
+});
+
+problemSelect?.addEventListener("change", (event) => {
+  state.activeProblemId = event.target.value;
+  state.stepIndex = 0;
+  renderWorkspace();
+});
+
+document.querySelector("#practice-form")?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const problem = getProblemById(state.activeProblemId);
+  const userAnswer = normalizeAnswer(answerInput.value);
+  const accepted = [problem.answer, ...problem.variants].map(normalizeAnswer);
+
+  state.checked += 1;
+
+  if (accepted.includes(userAnswer)) {
+    setFeedback("success", "Відповідь правильна. Ви можете перейти до наступної задачі або зарахувати тему як опрацьовану.");
+    markCurrentProblemComplete();
+  } else {
+    setFeedback("error", `Поки що ні. Підказка: зверніть увагу на алгоритм розв'язання у блоці вище.`);
+  }
+
+  persistState();
+  updateProgress();
+});
+
+document.querySelector("#mark-complete")?.addEventListener("click", () => {
+  markCurrentProblemComplete();
+  setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
+});
+
+prevStepButton?.addEventListener("click", () => {
+  state.stepIndex = Math.max(0, state.stepIndex - 1);
+  renderWorkspace();
+});
+
+nextStepButton?.addEventListener("click", () => {
+  const problem = getProblemById(state.activeProblemId);
+
+  if (state.stepIndex >= problem.steps.length - 1) {
+    state.stepIndex = 0;
+  } else {
+    state.stepIndex += 1;
+  }
+
+  renderWorkspace();
+});
+
+document.querySelector("#metric-modules").textContent = String(modules.length);
+document.querySelector("#metric-problems").textContent = String(problems.length);
+
+renderModules();
+renderProblemSelect();
+renderWorkspace();
+updateProgress();

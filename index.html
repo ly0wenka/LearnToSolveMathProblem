@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathMentor Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">M</span>
+          <div>
+            <p class="eyebrow">Bachelor Project Concept</p>
+            <h1>MathMentor Flow</h1>
+          </div>
+        </div>
+        <a class="ghost-button" href="#practice">Почати практику</a>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="section-tag">Проєктування та розробка ПЗ</p>
+          <h2>Застосунок для навчання з розв'язання математичних задач</h2>
+          <p class="hero-text">
+            Інтерактивне середовище для студентів і школярів, яке поєднує теорію, алгоритми розв'язання,
+            покроковий супровід і самоперевірку.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#modules">Огляд модулів</a>
+            <a class="secondary-button" href="#workspace">Демонстрація сценарію</a>
+          </div>
+          <ul class="hero-metrics">
+            <li><strong id="metric-modules">4</strong><span>навчальні модулі</span></li>
+            <li><strong id="metric-problems">8</strong><span>практичні задачі</span></li>
+            <li><strong id="metric-progress">0%</strong><span>особистий прогрес</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-panel">
+          <div class="panel-glow"></div>
+          <p class="panel-caption">Навчальний цикл</p>
+          <ol class="flow-list">
+            <li>Оберіть тему та рівень складності</li>
+            <li>Отримайте алгоритм розв'язання</li>
+            <li>Виконайте кроки з підказками</li>
+            <li>Перевірте відповідь і збережіть результат</li>
+          </ol>
+          <div class="focus-card">
+            <span class="focus-label">Фокус бакалаврської роботи</span>
+            <p>
+              Персоналізація навчання, формування математичних компетентностей, візуалізація кроків
+              та аналітика успішності.
+            </p>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section" id="modules">
+        <div class="section-heading">
+          <p class="section-tag">Навчальні модулі</p>
+          <h3>Тематика, яка лягає в основу дипломного застосунку</h3>
+        </div>
+        <div class="module-layout">
+          <div class="module-list" id="module-list"></div>
+          <article class="module-detail" id="module-detail"></article>
+        </div>
+      </section>
+
+      <section class="section workspace" id="workspace">
+        <div class="section-heading">
+          <p class="section-tag">Сценарій використання</p>
+          <h3>Покроковий супровід розв'язання задачі</h3>
+        </div>
+        <div class="workspace-grid">
+          <article class="workspace-card">
+            <p class="workspace-tag">Активна задача</p>
+            <h4 id="workspace-title"></h4>
+            <p id="workspace-problem" class="workspace-problem"></p>
+            <div class="workspace-meta">
+              <span id="workspace-topic"></span>
+              <span id="workspace-level"></span>
+            </div>
+            <div class="step-controls">
+              <button class="secondary-button" id="prev-step">Назад</button>
+              <button class="primary-button" id="next-step">Наступний крок</button>
+            </div>
+          </article>
+
+          <article class="workspace-card solution-card">
+            <p class="workspace-tag">Алгоритм розв'язання</p>
+            <div id="step-indicator" class="step-indicator"></div>
+            <h4 id="step-title"></h4>
+            <p id="step-description"></p>
+            <div class="step-tip" id="step-tip"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="practice">
+        <div class="section-heading">
+          <p class="section-tag">Практика</p>
+          <h3>Тренажер самоперевірки та фіксації прогресу</h3>
+        </div>
+        <div class="practice-grid">
+          <form class="practice-card" id="practice-form">
+            <label for="problem-select">Оберіть задачу</label>
+            <select id="problem-select"></select>
+
+            <label for="answer-input">Ваша відповідь</label>
+            <input id="answer-input" type="text" placeholder="Наприклад: x = 3">
+
+            <button class="primary-button" type="submit">Перевірити відповідь</button>
+            <button class="ghost-button" type="button" id="mark-complete">Зарахувати як опрацьовану</button>
+          </form>
+
+          <article class="practice-card feedback-card">
+            <p class="workspace-tag">Результат перевірки</p>
+            <div id="feedback-box" class="feedback-box neutral">
+              Введіть відповідь і натисніть кнопку перевірки.
+            </div>
+            <div class="progress-panel">
+              <div class="progress-topline">
+                <span>Загальний прогрес</span>
+                <strong id="progress-value">0%</strong>
+              </div>
+              <div class="progress-bar">
+                <div id="progress-fill"></div>
+              </div>
+              <p id="progress-summary">Ще не розпочато жодної задачі.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section architecture">
+        <div class="section-heading">
+          <p class="section-tag">Концепція системи</p>
+          <h3>Що можна показати в пояснювальній записці</h3>
+        </div>
+        <div class="architecture-grid">
+          <article class="architecture-card">
+            <h4>Користувацький рівень</h4>
+            <p>Адаптивний інтерфейс, каталог тем, практикум, покрокова підтримка та особистий кабінет.</p>
+          </article>
+          <article class="architecture-card">
+            <h4>Логічний рівень</h4>
+            <p>Модуль управління контентом, оцінювання відповідей, аналітика прогресу, сценарії навчання.</p>
+          </article>
+          <article class="architecture-card">
+            <h4>Дані та аналітика</h4>
+            <p>База задач, профілі студентів, історія спроб, оцінки складності та рекомендації тем.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
