@@ -1,9 +1,11 @@
 import { createServer } from "node:http";
+import { fileURLToPath } from "node:url";
 import { modules, problems } from "./content.js";
 import { FileProgressStore } from "./store.js";
+import { isCorrectAnswer } from "../../shared/learning-core.js";
 
 const port = Number(process.env.PORT || 3000);
-const store = new FileProgressStore(new URL("../storage/progress.json", import.meta.url).pathname);
+const defaultStore = new FileProgressStore(new URL("../storage/progress.json", import.meta.url).pathname);
 
 function sendJson(response, statusCode, data) {
   response.writeHead(statusCode, {
@@ -13,10 +15,6 @@ function sendJson(response, statusCode, data) {
     "Access-Control-Allow-Headers": "Content-Type"
   });
   response.end(JSON.stringify(data));
-}
-
-function normalizeAnswer(value) {
-  return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 function findProblem(problemId) {
@@ -43,7 +41,7 @@ function parseRequestBody(request) {
   });
 }
 
-async function handleRequest(request, response) {
+export async function handleRequest(request, response, store = defaultStore) {
   const url = new URL(request.url, `http://${request.headers.host}`);
 
   if (request.method === "OPTIONS") {
@@ -94,8 +92,7 @@ async function handleRequest(request, response) {
       return;
     }
 
-    const acceptedAnswers = [problem.answer, ...problem.variants].map(normalizeAnswer);
-    const correct = acceptedAnswers.includes(normalizeAnswer(body.answer));
+    const correct = isCorrectAnswer(problem, body.answer);
     const progress = await store.markAttempt({
       problemId: body.problemId,
       answer: body.answer,
@@ -135,13 +132,19 @@ async function handleRequest(request, response) {
   sendJson(response, 404, { message: "Route not found." });
 }
 
-createServer((request, response) => {
-  handleRequest(request, response).catch((error) => {
-    sendJson(response, 500, {
-      message: "Internal server error.",
-      details: error.message
+export function createAppServer(store = defaultStore) {
+  return createServer((request, response) => {
+    handleRequest(request, response, store).catch((error) => {
+      sendJson(response, 500, {
+        message: "Internal server error.",
+        details: error.message
+      });
     });
   });
-}).listen(port, () => {
-  console.log(`MathMentor Flow API running on http://localhost:${port}`);
-});
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  createAppServer().listen(port, () => {
+    console.log(`MathMentor Flow API running on http://localhost:${port}`);
+  });
+}

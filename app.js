@@ -1,3 +1,8 @@
+import {
+  calculateProgress,
+  isCorrectAnswer
+} from "./shared/learning-core.js";
+
 const fallbackModules = [
   {
     id: "algebra",
@@ -152,11 +157,6 @@ const fallbackProblems = [
   }
 ];
 
-const fallbackProgress = {
-  completed: [],
-  checked: 0
-};
-
 const apiBase = "http://localhost:3000/api";
 const localStorageKey = "mathmentor-flow-progress";
 
@@ -200,8 +200,11 @@ function readLocalProgress() {
       completed: Array.isArray(parsed.completed) ? parsed.completed : [],
       checked: Number.isFinite(parsed.checked) ? parsed.checked : 0
     };
-  } catch (error) {
-    return { ...fallbackProgress };
+  } catch {
+    return {
+      completed: [],
+      checked: 0
+    };
   }
 }
 
@@ -210,10 +213,6 @@ function saveLocalProgress() {
     completed: state.completed,
     checked: state.checked
   }));
-}
-
-function normalizeAnswer(value) {
-  return value.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 function getProblemById(problemId) {
@@ -254,7 +253,7 @@ async function initializeData() {
     state.completed = progress.completedProblemIds;
     state.checked = progress.checkedCount;
     state.remoteMode = true;
-  } catch (error) {
+  } catch {
     state.remoteMode = false;
   }
 
@@ -314,8 +313,7 @@ function setFeedback(kind, text) {
 }
 
 function updateProgress() {
-  const totalProblems = Math.max(state.problems.length, 1);
-  const percent = Math.round((state.completed.length / totalProblems) * 100);
+  const percent = calculateProgress(state.completed.length, state.problems.length);
 
   progressValue.textContent = `${percent}%`;
   metricProgress.textContent = `${percent}%`;
@@ -385,10 +383,9 @@ async function handleAnswerCheck(event) {
     return;
   }
 
-  const acceptedAnswers = [problem.answer, ...problem.variants].map(normalizeAnswer);
   state.checked += 1;
 
-  if (acceptedAnswers.includes(normalizeAnswer(userAnswer))) {
+  if (isCorrectAnswer(problem, userAnswer)) {
     setFeedback("success", "Відповідь правильна. Ви можете перейти до наступної задачі або зарахувати тему як опрацьовану.");
     if (!state.completed.includes(state.activeProblemId)) {
       state.completed.push(state.activeProblemId);
@@ -421,7 +418,7 @@ function bindEvents() {
   document.querySelector("#practice-form")?.addEventListener("submit", async (event) => {
     try {
       await handleAnswerCheck(event);
-    } catch (error) {
+    } catch {
       setFeedback("error", "Не вдалося звернутися до сервера. Поверніться до демо-режиму або перевірте API.");
     }
   });
@@ -430,7 +427,7 @@ function bindEvents() {
     try {
       await markCurrentProblemComplete();
       setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
-    } catch (error) {
+    } catch {
       setFeedback("error", "Не вдалося оновити серверний прогрес.");
     }
   });
