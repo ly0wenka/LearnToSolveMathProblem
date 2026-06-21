@@ -1,4 +1,4 @@
-const modules = [
+const fallbackModules = [
   {
     id: "algebra",
     title: "Лінійні та квадратні рівняння",
@@ -45,7 +45,7 @@ const modules = [
   }
 ];
 
-const problems = [
+const fallbackProblems = [
   {
     id: "eq-1",
     topic: "Лінійні рівняння",
@@ -152,14 +152,23 @@ const problems = [
   }
 ];
 
-const storageKey = "mathmentor-flow-progress";
-const savedState = JSON.parse(localStorage.getItem(storageKey) || '{"completed":[],"checked":0}');
+const fallbackProgress = {
+  completed: [],
+  checked: 0
+};
+
+const apiBase = "http://localhost:3000/api";
+const localStorageKey = "mathmentor-flow-progress";
+
 const state = {
-  activeModule: modules[0].id,
-  activeProblemId: problems[0].id,
+  modules: fallbackModules,
+  problems: fallbackProblems,
+  activeModule: fallbackModules[0].id,
+  activeProblemId: fallbackProblems[0].id,
   stepIndex: 0,
-  completed: Array.isArray(savedState.completed) ? savedState.completed : [],
-  checked: Number.isFinite(savedState.checked) ? savedState.checked : 0
+  completed: [],
+  checked: 0,
+  remoteMode: false
 };
 
 const moduleList = document.querySelector("#module-list");
@@ -178,24 +187,84 @@ const feedbackBox = document.querySelector("#feedback-box");
 const progressValue = document.querySelector("#progress-value");
 const progressFill = document.querySelector("#progress-fill");
 const progressSummary = document.querySelector("#progress-summary");
+const metricModules = document.querySelector("#metric-modules");
+const metricProblems = document.querySelector("#metric-problems");
 const metricProgress = document.querySelector("#metric-progress");
 const prevStepButton = document.querySelector("#prev-step");
 const nextStepButton = document.querySelector("#next-step");
 
-function persistState() {
-  localStorage.setItem(storageKey, JSON.stringify({
+function readLocalProgress() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(localStorageKey) || "{}");
+    return {
+      completed: Array.isArray(parsed.completed) ? parsed.completed : [],
+      checked: Number.isFinite(parsed.checked) ? parsed.checked : 0
+    };
+  } catch (error) {
+    return { ...fallbackProgress };
+  }
+}
+
+function saveLocalProgress() {
+  localStorage.setItem(localStorageKey, JSON.stringify({
     completed: state.completed,
     checked: state.checked
   }));
 }
 
+function normalizeAnswer(value) {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
 function getProblemById(problemId) {
-  return problems.find((problem) => problem.id === problemId) || problems[0];
+  return state.problems.find((problem) => problem.id === problemId) || state.problems[0];
+}
+
+function getModuleById(moduleId) {
+  return state.modules.find((module) => module.id === moduleId) || state.modules[0];
+}
+
+async function requestJson(path, options = {}) {
+  const response = await fetch(`${apiBase}${path}`, {
+    headers: { "Content-Type": "application/json" },
+    ...options
+  });
+
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+async function initializeData() {
+  const localProgress = readLocalProgress();
+  state.completed = localProgress.completed;
+  state.checked = localProgress.checked;
+
+  try {
+    const [modules, problems, progress] = await Promise.all([
+      requestJson("/modules"),
+      requestJson("/problems"),
+      requestJson("/progress")
+    ]);
+
+    state.modules = modules.items;
+    state.problems = problems.items;
+    state.completed = progress.completedProblemIds;
+    state.checked = progress.checkedCount;
+    state.remoteMode = true;
+  } catch (error) {
+    state.remoteMode = false;
+  }
+
+  state.activeModule = state.modules[0]?.id || "";
+  state.activeProblemId = state.problems[0]?.id || "";
 }
 
 function renderModules() {
-  moduleList.innerHTML = modules.map((module) => `
-    <button class="module-card ${module.id === state.activeModule ? "active" : ""}" data-module-id="${module.id}">
+  moduleList.innerHTML = state.modules.map((module) => `
+    <button class="module-card ${module.id === state.activeModule ? "active" : ""}" data-module-id="${module.id}" type="button">
       <p class="section-tag">${module.level}</p>
       <h4>${module.title}</h4>
       <p>${module.summary}</p>
@@ -203,7 +272,7 @@ function renderModules() {
     </button>
   `).join("");
 
-  const activeModule = modules.find((module) => module.id === state.activeModule) || modules[0];
+  const activeModule = getModuleById(state.activeModule);
   moduleDetail.innerHTML = `
     <p class="section-tag">Опис модуля</p>
     <h4>${activeModule.title}</h4>
@@ -215,7 +284,7 @@ function renderModules() {
 }
 
 function renderProblemSelect() {
-  problemSelect.innerHTML = problems.map((problem) => `
+  problemSelect.innerHTML = state.problems.map((problem) => `
     <option value="${problem.id}" ${problem.id === state.activeProblemId ? "selected" : ""}>
       ${problem.topic}: ${problem.prompt}
     </option>
@@ -224,12 +293,12 @@ function renderProblemSelect() {
 
 function renderWorkspace() {
   const problem = getProblemById(state.activeProblemId);
-  const currentStep = problem.steps[state.stepIndex];
+  const currentStep = problem.steps[state.stepIndex] || problem.steps[0];
 
   workspaceTitle.textContent = problem.title;
   workspaceProblem.textContent = problem.prompt;
   workspaceTopic.textContent = problem.topic;
-  workspaceLevel.textContent = problem.level;
+  workspaceLevel.textContent = state.remoteMode ? `${problem.level} · API mode` : `${problem.level} · Demo mode`;
   stepIndicator.textContent = `Крок ${state.stepIndex + 1} із ${problem.steps.length}`;
   stepTitle.textContent = currentStep.title;
   stepDescription.textContent = currentStep.description;
@@ -239,98 +308,156 @@ function renderWorkspace() {
   nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
 }
 
-function normalizeAnswer(value) {
-  return value.toLowerCase().replace(/\s+/g, " ").trim();
-}
-
-function updateProgress() {
-  const percent = Math.round((state.completed.length / problems.length) * 100);
-  progressValue.textContent = `${percent}%`;
-  metricProgress.textContent = `${percent}%`;
-  progressFill.style.width = `${percent}%`;
-
-  if (!state.completed.length) {
-    progressSummary.textContent = "Ще не розпочато жодної задачі.";
-    return;
-  }
-
-  progressSummary.textContent = `Опрацьовано ${state.completed.length} з ${problems.length} задач. Перевірок виконано: ${state.checked}.`;
-}
-
 function setFeedback(kind, text) {
   feedbackBox.className = `feedback-box ${kind}`;
   feedbackBox.textContent = text;
 }
 
-function markCurrentProblemComplete() {
-  if (!state.completed.includes(state.activeProblemId)) {
-    state.completed.push(state.activeProblemId);
-    persistState();
-    updateProgress();
-  }
-}
+function updateProgress() {
+  const totalProblems = Math.max(state.problems.length, 1);
+  const percent = Math.round((state.completed.length / totalProblems) * 100);
 
-moduleList?.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-module-id]");
-  if (!button) {
+  progressValue.textContent = `${percent}%`;
+  metricProgress.textContent = `${percent}%`;
+  progressFill.style.width = `${percent}%`;
+  metricModules.textContent = String(state.modules.length);
+  metricProblems.textContent = String(state.problems.length);
+
+  if (!state.completed.length) {
+    progressSummary.textContent = state.remoteMode
+      ? "Серверний профіль підключено, але ще немає завершених задач."
+      : "Ще не розпочато жодної задачі.";
     return;
   }
 
-  state.activeModule = button.dataset.moduleId;
-  renderModules();
-});
+  progressSummary.textContent = `Опрацьовано ${state.completed.length} з ${state.problems.length} задач. Перевірок виконано: ${state.checked}.`;
+}
 
-problemSelect?.addEventListener("change", (event) => {
-  state.activeProblemId = event.target.value;
-  state.stepIndex = 0;
-  renderWorkspace();
-});
+function syncLocalProgress() {
+  if (!state.remoteMode) {
+    saveLocalProgress();
+  }
+}
 
-document.querySelector("#practice-form")?.addEventListener("submit", (event) => {
+async function markCurrentProblemComplete() {
+  if (state.completed.includes(state.activeProblemId)) {
+    return;
+  }
+
+  if (state.remoteMode) {
+    const result = await requestJson("/progress/complete", {
+      method: "POST",
+      body: JSON.stringify({ problemId: state.activeProblemId })
+    });
+    state.completed = result.completedProblemIds;
+    state.checked = result.checkedCount;
+  } else {
+    state.completed.push(state.activeProblemId);
+    syncLocalProgress();
+  }
+
+  updateProgress();
+}
+
+async function handleAnswerCheck(event) {
   event.preventDefault();
   const problem = getProblemById(state.activeProblemId);
-  const userAnswer = normalizeAnswer(answerInput.value);
-  const accepted = [problem.answer, ...problem.variants].map(normalizeAnswer);
+  const userAnswer = answerInput.value;
 
+  if (!userAnswer.trim()) {
+    setFeedback("error", "Спочатку введіть відповідь, а потім запускайте перевірку.");
+    return;
+  }
+
+  if (state.remoteMode) {
+    const result = await requestJson("/progress/check", {
+      method: "POST",
+      body: JSON.stringify({
+        problemId: state.activeProblemId,
+        answer: userAnswer
+      })
+    });
+
+    state.checked = result.progress.checkedCount;
+    state.completed = result.progress.completedProblemIds;
+    setFeedback(result.correct ? "success" : "error", result.message);
+    updateProgress();
+    return;
+  }
+
+  const acceptedAnswers = [problem.answer, ...problem.variants].map(normalizeAnswer);
   state.checked += 1;
 
-  if (accepted.includes(userAnswer)) {
+  if (acceptedAnswers.includes(normalizeAnswer(userAnswer))) {
     setFeedback("success", "Відповідь правильна. Ви можете перейти до наступної задачі або зарахувати тему як опрацьовану.");
-    markCurrentProblemComplete();
+    if (!state.completed.includes(state.activeProblemId)) {
+      state.completed.push(state.activeProblemId);
+    }
   } else {
-    setFeedback("error", `Поки що ні. Підказка: зверніть увагу на алгоритм розв'язання у блоці вище.`);
+    setFeedback("error", "Поки що ні. Підказка: зверніть увагу на алгоритм розв'язання у блоці вище.");
   }
 
-  persistState();
+  syncLocalProgress();
   updateProgress();
-});
+}
 
-document.querySelector("#mark-complete")?.addEventListener("click", () => {
-  markCurrentProblemComplete();
-  setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
-});
+function bindEvents() {
+  moduleList?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-module-id]");
+    if (!button) {
+      return;
+    }
 
-prevStepButton?.addEventListener("click", () => {
-  state.stepIndex = Math.max(0, state.stepIndex - 1);
-  renderWorkspace();
-});
+    state.activeModule = button.dataset.moduleId;
+    renderModules();
+  });
 
-nextStepButton?.addEventListener("click", () => {
-  const problem = getProblemById(state.activeProblemId);
-
-  if (state.stepIndex >= problem.steps.length - 1) {
+  problemSelect?.addEventListener("change", (event) => {
+    state.activeProblemId = event.target.value;
     state.stepIndex = 0;
-  } else {
-    state.stepIndex += 1;
-  }
+    renderWorkspace();
+  });
 
+  document.querySelector("#practice-form")?.addEventListener("submit", async (event) => {
+    try {
+      await handleAnswerCheck(event);
+    } catch (error) {
+      setFeedback("error", "Не вдалося звернутися до сервера. Поверніться до демо-режиму або перевірте API.");
+    }
+  });
+
+  document.querySelector("#mark-complete")?.addEventListener("click", async () => {
+    try {
+      await markCurrentProblemComplete();
+      setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
+    } catch (error) {
+      setFeedback("error", "Не вдалося оновити серверний прогрес.");
+    }
+  });
+
+  prevStepButton?.addEventListener("click", () => {
+    state.stepIndex = Math.max(0, state.stepIndex - 1);
+    renderWorkspace();
+  });
+
+  nextStepButton?.addEventListener("click", () => {
+    const problem = getProblemById(state.activeProblemId);
+    state.stepIndex = state.stepIndex >= problem.steps.length - 1 ? 0 : state.stepIndex + 1;
+    renderWorkspace();
+  });
+}
+
+async function bootstrap() {
+  await initializeData();
+  bindEvents();
+  renderModules();
+  renderProblemSelect();
   renderWorkspace();
-});
+  updateProgress();
 
-document.querySelector("#metric-modules").textContent = String(modules.length);
-document.querySelector("#metric-problems").textContent = String(problems.length);
+  if (state.remoteMode) {
+    setFeedback("neutral", "Підключено API-сервер. Відповіді та прогрес синхронізуються через backend.");
+  }
+}
 
-renderModules();
-renderProblemSelect();
-renderWorkspace();
-updateProgress();
+bootstrap();
