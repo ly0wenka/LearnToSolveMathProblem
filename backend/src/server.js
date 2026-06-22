@@ -6,7 +6,7 @@ import { isCorrectAnswer } from "../../shared/learning-core.js";
 import { solveExpressionWithCalc } from "./calc-service.js";
 
 const port = Number(process.env.PORT || 3000);
-const defaultStore = new FileProgressStore(new URL("../storage/progress.json", import.meta.url).pathname);
+const defaultStore = new FileProgressStore(fileURLToPath(new URL("../storage/progress.json", import.meta.url)));
 
 function sendJson(response, statusCode, data) {
   response.writeHead(statusCode, {

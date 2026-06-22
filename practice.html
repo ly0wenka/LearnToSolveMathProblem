@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathMentor Flow — Практика</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero compact-hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">M</span>
+          <div>
+            <p class="eyebrow">Math Learning Platform</p>
+            <h1>MathMentor Flow</h1>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Головна</a>
+          <a class="nav-link" href="topics.html">Теми</a>
+          <a class="nav-link active" href="practice.html">Практика</a>
+          <a class="nav-link" href="solver.html">Розбір</a>
+          <a class="nav-link" href="progress.html">Прогрес</a>
+        </div>
+      </nav>
+      <div class="page-intro">
+        <p class="section-tag">Практика</p>
+        <h2>Розв’язуйте задачі й перевіряйте відповіді</h2>
+      </div>
+    </header>
+
+    <main>
+      <section class="section workspace">
+        <div class="section-heading">
+          <p class="section-tag">Покроковий супровід</p>
+          <h3>Алгоритм розв’язання для обраної задачі</h3>
+        </div>
+        <div class="workspace-grid">
+          <article class="workspace-card">
+            <p class="workspace-tag">Активна задача</p>
+            <h4 id="workspace-title"></h4>
+            <p id="workspace-problem" class="workspace-problem"></p>
+            <div class="workspace-meta">
+              <span id="workspace-topic"></span>
+              <span id="workspace-level"></span>
+            </div>
+            <div class="step-controls">
+              <button class="secondary-button" id="prev-step" type="button">Назад</button>
+              <button class="primary-button" id="next-step" type="button">Наступний крок</button>
+            </div>
+          </article>
+
+          <article class="workspace-card solution-card">
+            <p class="workspace-tag">Крок розв’язання</p>
+            <div id="step-indicator" class="step-indicator"></div>
+            <h4 id="step-title"></h4>
+            <p id="step-description"></p>
+            <div class="step-tip" id="step-tip"></div>
+          </article>
+        </div>
+
+        <div class="formula-board">
+          <article class="formula-card">
+            <p class="workspace-tag">Розділ математики</p>
+            <h4 id="formula-section-title"></h4>
+            <p id="formula-section-description"></p>
+          </article>
+          <article class="formula-card">
+            <p class="workspace-tag">Ключові формули</p>
+            <div id="formula-list" class="formula-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="section-tag">Самоперевірка</p>
+          <h3>Оберіть задачу та введіть відповідь</h3>
+        </div>
+        <div class="practice-grid">
+          <form class="practice-card" id="practice-form">
+            <label for="problem-select">Оберіть задачу</label>
+            <select id="problem-select"></select>
+            <div class="answer-example" id="answer-example"></div>
+
+            <label for="answer-input">Ваша відповідь</label>
+            <input id="answer-input" type="text" placeholder="Наприклад: x = 3">
+
+            <button class="primary-button" type="submit">Перевірити відповідь</button>
+            <button class="ghost-button" type="button" id="mark-complete">Зарахувати як опрацьовану</button>
+          </form>
+
+          <article class="practice-card feedback-card">
+            <p class="workspace-tag">Результат перевірки</p>
+            <div id="feedback-box" class="feedback-box neutral">Введіть відповідь і натисніть кнопку перевірки.</div>
+            <div class="progress-panel">
+              <div class="progress-topline">
+                <span>Загальний прогрес</span>
+                <strong id="progress-value">0%</strong>
+              </div>
+              <div class="progress-bar">
+                <div id="progress-fill"></div>
+              </div>
+              <p id="progress-summary">Ще немає завершених задач.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js?v=3"></script>
+</body>
+</html>

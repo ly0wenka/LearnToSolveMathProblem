@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathMentor Flow — Прогрес</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero compact-hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">M</span>
+          <div>
+            <p class="eyebrow">Math Learning Platform</p>
+            <h1>MathMentor Flow</h1>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Головна</a>
+          <a class="nav-link" href="topics.html">Теми</a>
+          <a class="nav-link" href="practice.html">Практика</a>
+          <a class="nav-link" href="solver.html">Розбір</a>
+          <a class="nav-link active" href="progress.html">Прогрес</a>
+        </div>
+      </nav>
+      <div class="page-intro">
+        <p class="section-tag">Аналітика навчання</p>
+        <h2>Прогрес, завершені задачі та історія спроб</h2>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="section-heading">
+          <p class="section-tag">Статистика</p>
+          <h3>Короткий знімок поточного навчального стану</h3>
+        </div>
+        <div class="stats-grid" id="progress-stats"></div>
+      </section>
+
+      <section class="section">
+        <div class="practice-grid">
+          <article class="practice-card">
+            <p class="workspace-tag">Завершені задачі</p>
+            <ul class="simple-list" id="completed-list"></ul>
+          </article>
+          <article class="practice-card">
+            <p class="workspace-tag">Останні спроби</p>
+            <ul class="simple-list" id="attempts-list"></ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js?v=3"></script>
+</body>
+</html>

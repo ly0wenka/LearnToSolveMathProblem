@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="page-shell">
@@ -20,174 +20,88 @@
             <h1>MathMentor Flow</h1>
           </div>
         </div>
-        <a class="ghost-button" href="#practice">Почати практику</a>
+        <div class="nav-links">
+          <a class="nav-link active" href="index.html">Головна</a>
+          <a class="nav-link" href="topics.html">Теми</a>
+          <a class="nav-link" href="practice.html">Практика</a>
+          <a class="nav-link" href="solver.html">Розбір</a>
+          <a class="nav-link" href="progress.html">Прогрес</a>
+        </div>
       </nav>
 
       <section class="hero-grid">
         <div class="hero-copy">
-          <p class="section-tag">Проєктування та розробка ПЗ</p>
-          <h2>Застосунок для навчання з розв'язання математичних задач</h2>
+          <p class="section-tag">Онлайн-середовище для навчання</p>
+          <h2>Навчайтеся розв’язувати математичні задачі покроково</h2>
           <p class="hero-text">
-            Інтерактивне середовище для студентів і школярів, яке поєднує теорію,
-            алгоритми розв'язання, покроковий супровід і самоперевірку.
+            Платформа об’єднує теми, практичні задачі, автоматичний розбір виразів і контроль прогресу.
+            Ви можете переходити між розділами, обирати тему та тренуватися у власному темпі.
           </p>
           <div class="hero-actions">
-            <a class="primary-button" href="#modules">Огляд модулів</a>
-            <a class="secondary-button" href="#workspace">Демонстрація сценарію</a>
+            <a class="primary-button" href="topics.html">Переглянути теми</a>
+            <a class="secondary-button" href="practice.html">Почати практику</a>
           </div>
           <ul class="hero-metrics">
-            <li><strong id="metric-modules">4</strong><span>навчальні модулі</span></li>
-            <li><strong id="metric-problems">4</strong><span>практичні задачі</span></li>
-            <li><strong id="metric-progress">0%</strong><span>особистий прогрес</span></li>
+            <li><strong id="metric-modules">0</strong><span>навчальних тем</span></li>
+            <li><strong id="metric-problems">0</strong><span>практичних задач</span></li>
+            <li><strong id="metric-progress">0%</strong><span>поточний прогрес</span></li>
           </ul>
         </div>
 
         <div class="hero-panel">
           <div class="panel-glow"></div>
-          <p class="panel-caption">Навчальний цикл</p>
+          <p class="panel-caption">Навчальний маршрут</p>
           <ol class="flow-list">
-            <li>Оберіть тему та рівень складності</li>
-            <li>Отримайте алгоритм розв'язання</li>
-            <li>Виконайте кроки з підказками</li>
-            <li>Перевірте відповідь і збережіть результат</li>
+            <li>Ознайомтеся з темами та оберіть потрібну</li>
+            <li>Перейдіть до практичної задачі</li>
+            <li>Розв’яжіть її з покроковими підказками</li>
+            <li>Перевірте відповідь і зафіксуйте прогрес</li>
           </ol>
           <div class="focus-card">
-            <span class="focus-label">Фокус застосунку</span>
-            <p>
-              Персоналізація навчання, формування математичних компетентностей,
-              візуалізація кроків та аналітика успішності.
-            </p>
+            <span class="focus-label">Швидкий огляд</span>
+            <p>У системі вже доступно <strong id="hero-topic-count">0</strong> тем і <strong id="hero-practice-count">0</strong> задач для самостійної роботи.</p>
+            <div class="mini-chip-list" id="hero-topic-links"></div>
           </div>
         </div>
       </section>
     </header>
 
     <main>
-      <section class="section" id="modules">
+      <section class="section">
         <div class="section-heading">
-          <p class="section-tag">Навчальні модулі</p>
-          <h3>Тематика, яка лягає в основу застосунку</h3>
+          <p class="section-tag">Сторінки застосунку</p>
+          <h3>Працюйте через окремі розділи, а не на одній довгій сторінці</h3>
         </div>
-        <div class="module-layout">
-          <div class="module-list" id="module-list"></div>
-          <article class="module-detail" id="module-detail"></article>
-        </div>
-      </section>
-
-      <section class="section workspace" id="workspace">
-        <div class="section-heading">
-          <p class="section-tag">Сценарій використання</p>
-          <h3>Покроковий супровід розв'язання задачі</h3>
-        </div>
-        <div class="workspace-grid">
-          <article class="workspace-card">
-            <p class="workspace-tag">Активна задача</p>
-            <h4 id="workspace-title"></h4>
-            <p id="workspace-problem" class="workspace-problem"></p>
-            <div class="workspace-meta">
-              <span id="workspace-topic"></span>
-              <span id="workspace-level"></span>
-            </div>
-            <div class="step-controls">
-              <button class="secondary-button" id="prev-step" type="button">Назад</button>
-              <button class="primary-button" id="next-step" type="button">Наступний крок</button>
-            </div>
+        <div class="topics-grid">
+          <article class="topic-tile">
+            <p class="section-tag">Теми</p>
+            <h4>Каталог навчальних тем</h4>
+            <p>Перегляд усіх розділів курсу з короткими описами та кількістю задач.</p>
+            <div class="topic-tile-meta"><a class="ghost-button" href="topics.html">Відкрити</a></div>
           </article>
-
-          <article class="workspace-card solution-card">
-            <p class="workspace-tag">Алгоритм розв'язання</p>
-            <div id="step-indicator" class="step-indicator"></div>
-            <h4 id="step-title"></h4>
-            <p id="step-description"></p>
-            <div class="step-tip" id="step-tip"></div>
+          <article class="topic-tile">
+            <p class="section-tag">Практика</p>
+            <h4>Тренажер відповідей</h4>
+            <p>Оберіть задачу, дайте відповідь і одразу отримайте результат перевірки.</p>
+            <div class="topic-tile-meta"><a class="ghost-button" href="practice.html">Відкрити</a></div>
           </article>
-        </div>
-
-        <div class="formula-board">
-          <article class="formula-card">
-            <p class="workspace-tag">Розділ математики</p>
-            <h4 id="formula-section-title"></h4>
-            <p id="formula-section-description"></p>
+          <article class="topic-tile">
+            <p class="section-tag">Розбір</p>
+            <h4>Автоматичний аналіз виразу</h4>
+            <p>Сторінка для роботи з підмодулем <code>calc</code> і доступними кроками перетворення.</p>
+            <div class="topic-tile-meta"><a class="ghost-button" href="solver.html">Відкрити</a></div>
           </article>
-
-          <article class="formula-card">
-            <p class="workspace-tag">Ключові формули</p>
-            <div id="formula-list" class="formula-list"></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="calc-engine">
-        <div class="section-heading">
-          <p class="section-tag">Математичний рушій</p>
-          <h3>Автоматичний розбір виразу через підмодуль `calc`</h3>
-        </div>
-        <div class="practice-grid">
-          <form class="practice-card" id="solver-form">
-            <label for="solver-expression">Вираз для аналізу</label>
-            <input id="solver-expression" type="text" placeholder="Наприклад: 2x+7=19">
-            <div class="answer-example" id="solver-hint">
-              Можна вибрати задачу вище, а потім автоматично побудувати гілки розв'язання.
-            </div>
-            <button class="primary-button" type="submit">Побудувати кроки</button>
-          </form>
-
-          <article class="practice-card feedback-card">
-            <p class="workspace-tag">Результат аналізу</p>
-            <div id="solver-status" class="feedback-box neutral">
-              Виберіть або введіть вираз і натисніть кнопку побудови.
-            </div>
-            <div class="solver-result">
-              <p class="workspace-tag">Поточний вираз</p>
-              <div id="solver-expression-view" class="formula-item">—</div>
-            </div>
-            <div class="solver-branches">
-              <p class="workspace-tag">Доступні кроки</p>
-              <div id="solver-branches-list"></div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="practice">
-        <div class="section-heading">
-          <p class="section-tag">Практика</p>
-          <h3>Тренажер самоперевірки та фіксації прогресу</h3>
-        </div>
-        <div class="practice-grid">
-          <form class="practice-card" id="practice-form">
-            <label for="problem-select">Оберіть задачу</label>
-            <select id="problem-select"></select>
-            <div class="answer-example" id="answer-example"></div>
-
-            <label for="answer-input">Ваша відповідь</label>
-            <input id="answer-input" type="text" placeholder="Наприклад: x = 3">
-
-            <button class="primary-button" type="submit">Перевірити відповідь</button>
-            <button class="ghost-button" type="button" id="mark-complete">Зарахувати як опрацьовану</button>
-          </form>
-
-          <article class="practice-card feedback-card">
-            <p class="workspace-tag">Результат перевірки</p>
-            <div id="feedback-box" class="feedback-box neutral">
-              Введіть відповідь і натисніть кнопку перевірки.
-            </div>
-            <div class="progress-panel">
-              <div class="progress-topline">
-                <span>Загальний прогрес</span>
-                <strong id="progress-value">0%</strong>
-              </div>
-              <div class="progress-bar">
-                <div id="progress-fill"></div>
-              </div>
-              <p id="progress-summary">Ще не розпочато жодної задачі.</p>
-            </div>
+          <article class="topic-tile">
+            <p class="section-tag">Прогрес</p>
+            <h4>Статистика навчання</h4>
+            <p>Завершені задачі, кількість перевірок і коротка історія спроб.</p>
+            <div class="topic-tile-meta"><a class="ghost-button" href="progress.html">Відкрити</a></div>
           </article>
         </div>
       </section>
     </main>
   </div>
 
-  <script type="module" src="app.js?v=2"></script>
+  <script type="module" src="app.js?v=3"></script>
 </body>
 </html>

@@ -8,18 +8,98 @@ const formulasByTopic = {
   },
   "Квадратні рівняння": {
     section: "Алгебра: квадратні рівняння",
-    description: "Обчислюємо дискримінант і за ним визначаємо кількість та значення коренів.",
+    description: "Обчислюємо дискримінант і визначаємо корені рівняння.",
     formulas: ["ax² + bx + c = 0", "D = b² - 4ac", "x₁,₂ = (-b ± √D) / 2a"]
   },
   "Функції": {
-    section: "Алгебра: лінійна функція",
-    description: "Щоб знайти нуль функції, потрібно прирівняти її значення до нуля.",
-    formulas: ["y = kx + b", "0 = kx + b", "x = -b / k"]
+    section: "Алгебра: функції",
+    description: "Працюємо з нулями функції, значенням у точці та областю визначення.",
+    formulas: ["y = kx + b", "f(x) = 0", "D(y)"]
   },
-  "Геометрія": {
-    section: "Планіметрія",
-    description: "Для базових геометричних задач спершу визначаємо відомі величини й підбираємо формулу.",
-    formulas: ["S = a · b", "P = 2(a + b)", "S△ = 1/2 · a · h"]
+  "Планіметрія": {
+    section: "Геометрія: планіметрія",
+    description: "Застосовуємо формули площ і периметрів до базових фігур.",
+    formulas: ["S = a · b", "P = 4a", "S△ = 1/2 · a · h"]
+  },
+  "Дроби": {
+    section: "Арифметика: дроби",
+    description: "Скорочення, спільний знаменник і базові арифметичні дії.",
+    formulas: ["a/b + c/b = (a + c)/b", "a/b · c/d = ac/bd", "НСД(a, b)"]
+  },
+  "Пропорції": {
+    section: "Алгебра: пропорції",
+    description: "Застосовуємо основну властивість пропорції для пошуку невідомого.",
+    formulas: ["a/b = c/d", "ad = bc", "x = bc/a"]
+  },
+  "Відсотки": {
+    section: "Арифметика: відсотки",
+    description: "Переводимо відсотки у дроби та знаходимо частину від числа.",
+    formulas: ["p% = p/100", "part = whole · p/100", "new = whole ± change"]
+  },
+  "Системи рівнянь": {
+    section: "Алгебра: системи рівнянь",
+    description: "Використовуємо підстановку або додавання для двох рівнянь.",
+    formulas: ["x + y = a", "ax + by = c", "метод підстановки"]
+  },
+  "Нерівності": {
+    section: "Алгебра: нерівності",
+    description: "Працюємо з інтервалами та правилом зміни знака.",
+    formulas: ["ax + b > c", "x ∈ (a; b)", "при діленні на -1 знак змінюється"]
+  },
+  "Послідовності": {
+    section: "Алгебра: послідовності",
+    description: "Застосовуємо формули арифметичної та геометричної прогресій.",
+    formulas: ["aₙ = a₁ + (n - 1)d", "bₙ = b₁ · qⁿ⁻¹", "Sₙ"]
+  },
+  "Степені та корені": {
+    section: "Алгебра: степені й корені",
+    description: "Спростимо вирази за правилами степенів та квадратних коренів.",
+    formulas: ["aᵐ · aⁿ = aᵐ⁺ⁿ", "√a² = |a|", "a⁰ = 1"]
+  },
+  "Логарифми": {
+    section: "Алгебра: логарифми",
+    description: "Переходимо між логарифмічним і степеневим записом.",
+    formulas: ["logₐ b = c", "aᶜ = b", "logₐ 1 = 0"]
+  },
+  "Тригонометрія": {
+    section: "Тригонометрія",
+    description: "Користуємося стандартними значеннями тригонометричних функцій.",
+    formulas: ["sin 30° = 1/2", "cos 60° = 1/2", "tg 45° = 1"]
+  },
+  "Стереометрія": {
+    section: "Геометрія: стереометрія",
+    description: "Обчислюємо об'єми й площі поверхонь просторових тіл.",
+    formulas: ["V = a³", "V = abc", "S = 6a²"]
+  },
+  "Комбінаторика": {
+    section: "Комбінаторика",
+    description: "Рахуємо кількість варіантів через правило добутку.",
+    formulas: ["n · m", "n!", "C(n, k)"]
+  },
+  "Ймовірність": {
+    section: "Теорія ймовірностей",
+    description: "Знаходимо ймовірність як відношення сприятливих випадків до всіх.",
+    formulas: ["P = m/n", "0 ≤ P ≤ 1", "класична схема"]
+  },
+  "Похідна": {
+    section: "Математичний аналіз: похідна",
+    description: "Використовуємо правило степеня та обчислюємо значення похідної.",
+    formulas: ["(xⁿ)' = nxⁿ⁻¹", "f'(x)", "f'(a)"]
+  },
+  "Інтеграли": {
+    section: "Математичний аналіз: інтеграли",
+    description: "Шукаємо первісну і прості визначені інтеграли.",
+    formulas: ["∫ xⁿ dx", "F(b) - F(a)", "+ C"]
+  },
+  "Вектори": {
+    section: "Аналітична геометрія: вектори",
+    description: "Знаходимо координати, довжину й скалярний добуток.",
+    formulas: ["|a| = √(x² + y²)", "AB = (x₂ - x₁; y₂ - y₁)", "a · b"]
+  },
+  "Підсумкова практика": {
+    section: "Повторення і самоперевірка",
+    description: "Комбінуємо навички з різних тем у коротких тренувальних задачах.",
+    formulas: ["покрокова перевірка", "підстановка", "контроль результату"]
   }
 };
 
@@ -28,44 +108,52 @@ const apiBase = "http://localhost:3000/api";
 const state = {
   modules: [],
   problems: [],
+  progress: { checkedCount: 0, completedProblemIds: [], attempts: [] },
   activeModule: "",
   activeProblemId: "",
-  stepIndex: 0,
-  completed: [],
-  checked: 0
+  stepIndex: 0
 };
 
-const moduleList = document.querySelector("#module-list");
-const moduleDetail = document.querySelector("#module-detail");
-const workspaceTitle = document.querySelector("#workspace-title");
-const workspaceProblem = document.querySelector("#workspace-problem");
-const workspaceTopic = document.querySelector("#workspace-topic");
-const workspaceLevel = document.querySelector("#workspace-level");
-const stepIndicator = document.querySelector("#step-indicator");
-const stepTitle = document.querySelector("#step-title");
-const stepDescription = document.querySelector("#step-description");
-const stepTip = document.querySelector("#step-tip");
-const formulaSectionTitle = document.querySelector("#formula-section-title");
-const formulaSectionDescription = document.querySelector("#formula-section-description");
-const formulaList = document.querySelector("#formula-list");
-const problemSelect = document.querySelector("#problem-select");
-const answerExample = document.querySelector("#answer-example");
-const answerInput = document.querySelector("#answer-input");
-const feedbackBox = document.querySelector("#feedback-box");
-const progressValue = document.querySelector("#progress-value");
-const progressFill = document.querySelector("#progress-fill");
-const progressSummary = document.querySelector("#progress-summary");
-const metricModules = document.querySelector("#metric-modules");
-const metricProblems = document.querySelector("#metric-problems");
-const metricProgress = document.querySelector("#metric-progress");
-const prevStepButton = document.querySelector("#prev-step");
-const nextStepButton = document.querySelector("#next-step");
-const solverForm = document.querySelector("#solver-form");
-const solverExpressionInput = document.querySelector("#solver-expression");
-const solverHint = document.querySelector("#solver-hint");
-const solverStatus = document.querySelector("#solver-status");
-const solverExpressionView = document.querySelector("#solver-expression-view");
-const solverBranchesList = document.querySelector("#solver-branches-list");
+const elements = {
+  metricModules: document.querySelector("#metric-modules"),
+  metricProblems: document.querySelector("#metric-problems"),
+  metricProgress: document.querySelector("#metric-progress"),
+  heroTopicCount: document.querySelector("#hero-topic-count"),
+  heroPracticeCount: document.querySelector("#hero-practice-count"),
+  heroTopicLinks: document.querySelector("#hero-topic-links"),
+  moduleList: document.querySelector("#module-list"),
+  moduleDetail: document.querySelector("#module-detail"),
+  topicsGrid: document.querySelector("#topics-grid"),
+  workspaceTitle: document.querySelector("#workspace-title"),
+  workspaceProblem: document.querySelector("#workspace-problem"),
+  workspaceTopic: document.querySelector("#workspace-topic"),
+  workspaceLevel: document.querySelector("#workspace-level"),
+  stepIndicator: document.querySelector("#step-indicator"),
+  stepTitle: document.querySelector("#step-title"),
+  stepDescription: document.querySelector("#step-description"),
+  stepTip: document.querySelector("#step-tip"),
+  formulaSectionTitle: document.querySelector("#formula-section-title"),
+  formulaSectionDescription: document.querySelector("#formula-section-description"),
+  formulaList: document.querySelector("#formula-list"),
+  problemSelect: document.querySelector("#problem-select"),
+  answerExample: document.querySelector("#answer-example"),
+  answerInput: document.querySelector("#answer-input"),
+  feedbackBox: document.querySelector("#feedback-box"),
+  progressValue: document.querySelector("#progress-value"),
+  progressFill: document.querySelector("#progress-fill"),
+  progressSummary: document.querySelector("#progress-summary"),
+  prevStepButton: document.querySelector("#prev-step"),
+  nextStepButton: document.querySelector("#next-step"),
+  solverForm: document.querySelector("#solver-form"),
+  solverExpressionInput: document.querySelector("#solver-expression"),
+  solverHint: document.querySelector("#solver-hint"),
+  solverStatus: document.querySelector("#solver-status"),
+  solverExpressionView: document.querySelector("#solver-expression-view"),
+  solverBranchesList: document.querySelector("#solver-branches-list"),
+  progressStats: document.querySelector("#progress-stats"),
+  completedList: document.querySelector("#completed-list"),
+  attemptsList: document.querySelector("#attempts-list")
+};
 
 function getProblemById(problemId) {
   return state.problems.find((problem) => problem.id === problemId) || null;
@@ -73,6 +161,16 @@ function getProblemById(problemId) {
 
 function getModuleById(moduleId) {
   return state.modules.find((module) => module.id === moduleId) || null;
+}
+
+function getProblemsByModule(moduleId) {
+  return state.problems.filter((problem) => problem.moduleId === moduleId);
+}
+
+function syncActiveProblemForModule(moduleId) {
+  const moduleProblems = getProblemsByModule(moduleId);
+  state.activeProblemId = moduleProblems[0]?.id || state.problems[0]?.id || "";
+  state.stepIndex = 0;
 }
 
 async function requestJson(path, options = {}) {
@@ -97,126 +195,143 @@ async function initializeData() {
 
   state.modules = modules.items;
   state.problems = problems.items;
-  state.completed = progress.completedProblemIds;
-  state.checked = progress.checkedCount;
+  state.progress = progress;
 
   if (!state.modules.length || !state.problems.length) {
     throw new Error("Learning data is empty");
   }
 
-  state.activeModule = state.modules[0].id;
-  state.activeProblemId = state.problems[0].id;
+  state.activeModule = state.problems[0]?.moduleId || state.modules[0].id;
+  syncActiveProblemForModule(state.activeModule);
+}
+
+function setText(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function setHtml(element, value) {
+  if (element) {
+    element.innerHTML = value;
+  }
+}
+
+function renderHeroStats() {
+  const percent = calculateProgress(state.progress.completedProblemIds.length, state.problems.length);
+  setText(elements.metricModules, String(state.modules.length));
+  setText(elements.metricProblems, String(state.problems.length));
+  setText(elements.metricProgress, `${percent}%`);
+  setText(elements.heroTopicCount, String(state.modules.length));
+  setText(elements.heroPracticeCount, String(state.problems.length));
+
+  if (elements.heroTopicLinks) {
+    elements.heroTopicLinks.innerHTML = state.modules.slice(0, 8).map((module) => `
+      <a class="mini-chip" href="topics.html#${module.id}">${module.title}</a>
+    `).join("");
+  }
 }
 
 function renderModules() {
-  if (!state.modules.length) {
-    moduleList.innerHTML = "";
-    moduleDetail.innerHTML = `
-      <p class="section-tag">Опис модуля</p>
-      <h4>Дані недоступні</h4>
-      <p>Запустіть backend API, щоб завантажити навчальні модулі.</p>
-    `;
+  if (!elements.moduleList || !elements.moduleDetail) {
     return;
   }
 
-  moduleList.innerHTML = state.modules.map((module) => `
+  elements.moduleList.innerHTML = state.modules.map((module) => `
     <button class="module-card ${module.id === state.activeModule ? "active" : ""}" data-module-id="${module.id}" type="button">
       <p class="section-tag">${module.level}</p>
       <h4>${module.title}</h4>
       <p>${module.summary}</p>
-      <span class="module-card-meta">Навчальна ціль</span>
+      <span class="module-card-meta">${getProblemsByModule(module.id).length} задач</span>
     </button>
   `).join("");
 
   const activeModule = getModuleById(state.activeModule) || state.modules[0];
-  moduleDetail.innerHTML = `
+  const moduleProblems = getProblemsByModule(activeModule.id);
+  elements.moduleDetail.innerHTML = `
     <p class="section-tag">Опис модуля</p>
     <h4>${activeModule.title}</h4>
     <p>${activeModule.summary}</p>
     <ul class="detail-list">
       ${activeModule.outcomes.map((outcome) => `<li>${outcome}</li>`).join("")}
     </ul>
+    <div class="detail-footer">
+      <span class="module-card-meta">Задач у темі: ${moduleProblems.length}</span>
+      <a class="primary-button" href="practice.html">Перейти до практики</a>
+    </div>
   `;
 }
 
-function renderProblemSelect() {
-  if (!state.problems.length) {
-    problemSelect.innerHTML = `<option value="">Немає доступних задач</option>`;
-    problemSelect.disabled = true;
+function renderTopicsGrid() {
+  if (!elements.topicsGrid) {
     return;
   }
 
-  problemSelect.disabled = false;
-  problemSelect.innerHTML = state.problems.map((problem) => `
+  elements.topicsGrid.innerHTML = state.modules.map((module) => `
+    <article class="topic-tile" id="${module.id}">
+      <p class="section-tag">${module.level}</p>
+      <h4>${module.title}</h4>
+      <p>${module.summary}</p>
+      <div class="topic-tile-meta">
+        <span>${getProblemsByModule(module.id).length} задач</span>
+        <a class="ghost-button" href="practice.html">Відкрити</a>
+      </div>
+    </article>
+  `).join("");
+}
+
+function renderProblemSelect() {
+  if (!elements.problemSelect) {
+    return;
+  }
+
+  if (!state.problems.length) {
+    elements.problemSelect.innerHTML = `<option value="">Немає доступних задач</option>`;
+    elements.problemSelect.disabled = true;
+    return;
+  }
+
+  if (!state.problems.some((problem) => problem.id === state.activeProblemId)) {
+    state.activeProblemId = state.problems[0].id;
+  }
+
+  elements.problemSelect.disabled = false;
+  elements.problemSelect.innerHTML = state.problems.map((problem) => `
     <option value="${problem.id}" ${problem.id === state.activeProblemId ? "selected" : ""}>
       ${problem.topic}: ${problem.prompt}
     </option>
   `).join("");
 }
 
-function setFeedback(kind, text) {
-  feedbackBox.className = `feedback-box ${kind}`;
-  feedbackBox.textContent = text;
-}
-
-function setSolverStatus(kind, text) {
-  solverStatus.className = `feedback-box ${kind}`;
-  solverStatus.textContent = text;
-}
-
-function renderSolverBranches(branches) {
-  if (!branches.length) {
-    solverBranchesList.innerHTML = `<div class="solver-branch-card">Для цього виразу підмодуль не повернув окремих кроків.</div>`;
+function renderWorkspace() {
+  if (!elements.workspaceTitle) {
     return;
   }
 
-  solverBranchesList.innerHTML = branches.map((branch) => `
-    <article class="solver-branch-card">
-      <h4>${branch.formula_name}</h4>
-      <p>${branch.step_description}</p>
-      <div class="solver-next">${branch.next_node?.expression_str || "Кінцевий стан"}</div>
-    </article>
-  `).join("");
-}
-
-async function analyzeExpression(expression) {
-  setSolverStatus("neutral", "Виконується аналіз виразу через підмодуль calc...");
-
-  try {
-    const payload = await requestJson(`/solver?expression=${encodeURIComponent(expression)}`);
-    const graph = payload.solution_graph || {};
-    const branches = graph.available_branches || [];
-    solverExpressionView.textContent = graph.expression_str || payload.input_expression || expression;
-    renderSolverBranches(branches);
-    setSolverStatus("success", `Аналіз виконано. Знайдено ${branches.length} доступних кроків.`);
-  } catch {
-    solverExpressionView.textContent = expression;
-    renderSolverBranches([]);
-    setSolverStatus("error", "Не вдалося отримати розбір із підмодуля calc. Перевірте backend та Python.");
-  }
-}
-
-function renderWorkspace() {
   const problem = getProblemById(state.activeProblemId);
 
   if (!problem) {
-    workspaceTitle.textContent = "Дані недоступні";
-    workspaceProblem.textContent = "Не вдалося завантажити задачі з API.";
-    workspaceTopic.textContent = "API";
-    workspaceLevel.textContent = "Очікування";
-    stepIndicator.textContent = "Крок 0 із 0";
-    stepTitle.textContent = "Немає активної задачі";
-    stepDescription.textContent = "Запустіть backend і перезавантажте сторінку.";
-    stepTip.textContent = "Перевірте, що сервер відповідає на http://localhost:3000/api.";
-    formulaSectionTitle.textContent = "Формули";
-    formulaSectionDescription.textContent = "Після підключення API тут з'являться формули та пояснення.";
-    formulaList.innerHTML = `<div class="formula-item">API недоступний</div>`;
-    answerExample.innerHTML = `<strong>Приклад відповіді:</strong> —`;
-    answerInput.placeholder = "Спочатку запустіть backend";
-    solverExpressionInput.value = "";
-    solverHint.innerHTML = `<strong>Вираз задачі:</strong> —`;
-    prevStepButton.disabled = true;
-    nextStepButton.disabled = true;
+    setText(elements.workspaceTitle, "Дані недоступні");
+    setText(elements.workspaceProblem, "Не вдалося завантажити задачі з API.");
+    setText(elements.workspaceTopic, "API");
+    setText(elements.workspaceLevel, "Очікування");
+    setText(elements.stepIndicator, "Крок 0 із 0");
+    setText(elements.stepTitle, "Немає активної задачі");
+    setText(elements.stepDescription, "Запустіть backend і перезавантажте сторінку.");
+    setText(elements.stepTip, "Перевірте API на http://localhost:3000/api.");
+    setText(elements.formulaSectionTitle, "Формули");
+    setText(elements.formulaSectionDescription, "Після підключення API тут з'являться формули.");
+    setHtml(elements.formulaList, `<div class="formula-item">API недоступний</div>`);
+    setHtml(elements.answerExample, `<strong>Приклад відповіді:</strong> —`);
+    if (elements.answerInput) {
+      elements.answerInput.placeholder = "Спочатку запустіть backend";
+    }
+    if (elements.solverExpressionInput) {
+      elements.solverExpressionInput.value = "";
+    }
+    setHtml(elements.solverHint, `<strong>Вираз задачі:</strong> —`);
+    if (elements.prevStepButton) elements.prevStepButton.disabled = true;
+    if (elements.nextStepButton) elements.nextStepButton.disabled = true;
     return;
   }
 
@@ -227,50 +342,156 @@ function renderWorkspace() {
     formulas: ["Формули буде визначено для обраної теми."]
   };
 
-  workspaceTitle.textContent = problem.title;
-  workspaceProblem.textContent = problem.prompt;
-  workspaceTopic.textContent = problem.topic;
-  workspaceLevel.textContent = problem.level;
-  stepIndicator.textContent = `Крок ${state.stepIndex + 1} із ${problem.steps.length}`;
-  stepTitle.textContent = currentStep.title;
-  stepDescription.textContent = currentStep.description;
-  stepTip.textContent = currentStep.tip;
-  formulaSectionTitle.textContent = formulaInfo.section;
-  formulaSectionDescription.textContent = formulaInfo.description;
-  formulaList.innerHTML = formulaInfo.formulas.map((formula) => `<div class="formula-item">${formula}</div>`).join("");
-  answerExample.innerHTML = `<strong>Приклад відповіді:</strong> ${problem.answer}`;
-  answerInput.placeholder = `Наприклад: ${problem.answer}`;
-  solverExpressionInput.value = problem.prompt;
-  solverHint.innerHTML = `<strong>Вираз задачі:</strong> ${problem.prompt}`;
+  setText(elements.workspaceTitle, problem.title);
+  setText(elements.workspaceProblem, problem.prompt);
+  setText(elements.workspaceTopic, problem.topic);
+  setText(elements.workspaceLevel, problem.level);
+  setText(elements.stepIndicator, `Крок ${state.stepIndex + 1} із ${problem.steps.length}`);
+  setText(elements.stepTitle, currentStep.title);
+  setText(elements.stepDescription, currentStep.description);
+  setText(elements.stepTip, currentStep.tip);
+  setText(elements.formulaSectionTitle, formulaInfo.section);
+  setText(elements.formulaSectionDescription, formulaInfo.description);
+  setHtml(elements.formulaList, formulaInfo.formulas.map((formula) => `<div class="formula-item">${formula}</div>`).join(""));
+  setHtml(elements.answerExample, `<strong>Приклад відповіді:</strong> ${problem.answer}`);
 
-  prevStepButton.disabled = state.stepIndex === 0;
-  nextStepButton.disabled = false;
-  nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
+  if (elements.answerInput) {
+    elements.answerInput.placeholder = `Наприклад: ${problem.answer}`;
+  }
+
+  if (elements.solverExpressionInput) {
+    elements.solverExpressionInput.value = problem.prompt;
+  }
+
+  setHtml(elements.solverHint, `<strong>Вираз задачі:</strong> ${problem.prompt}`);
+
+  if (elements.prevStepButton) {
+    elements.prevStepButton.disabled = state.stepIndex === 0;
+  }
+  if (elements.nextStepButton) {
+    elements.nextStepButton.disabled = false;
+    elements.nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
+  }
+}
+
+function setFeedback(kind, text) {
+  if (!elements.feedbackBox) {
+    return;
+  }
+
+  elements.feedbackBox.className = `feedback-box ${kind}`;
+  elements.feedbackBox.textContent = text;
+}
+
+function setSolverStatus(kind, text) {
+  if (!elements.solverStatus) {
+    return;
+  }
+
+  elements.solverStatus.className = `feedback-box ${kind}`;
+  elements.solverStatus.textContent = text;
+}
+
+function renderSolverBranches(branches) {
+  if (!elements.solverBranchesList) {
+    return;
+  }
+
+  if (!branches.length) {
+    elements.solverBranchesList.innerHTML = `<div class="solver-branch-card">Для цього виразу підмодуль не повернув окремих кроків.</div>`;
+    return;
+  }
+
+  elements.solverBranchesList.innerHTML = branches.map((branch) => `
+    <article class="solver-branch-card">
+      <h4>${branch.formula_name}</h4>
+      <p>${branch.step_description}</p>
+      <div class="solver-next">${branch.next_node?.expression_str || "Кінцевий стан"}</div>
+    </article>
+  `).join("");
+}
+
+async function analyzeExpression(expression) {
+  if (!elements.solverExpressionView && !elements.solverStatus) {
+    return;
+  }
+
+  setSolverStatus("neutral", "Виконується аналіз виразу через підмодуль calc...");
+
+  try {
+    const payload = await requestJson(`/solver?expression=${encodeURIComponent(expression)}`);
+    const graph = payload.solution_graph || {};
+    const branches = graph.available_branches || [];
+    setText(elements.solverExpressionView, graph.expression_str || payload.input_expression || expression);
+    renderSolverBranches(branches);
+    setSolverStatus("success", `Аналіз виконано. Знайдено ${branches.length} доступних кроків.`);
+  } catch {
+    setText(elements.solverExpressionView, expression);
+    renderSolverBranches([]);
+    setSolverStatus("error", "Не вдалося отримати розбір із підмодуля calc. Перевірте backend та Python.");
+  }
 }
 
 function updateProgress() {
-  const percent = calculateProgress(state.completed.length, state.problems.length);
-  progressValue.textContent = `${percent}%`;
-  metricProgress.textContent = `${percent}%`;
-  progressFill.style.width = `${percent}%`;
-  metricModules.textContent = String(state.modules.length);
-  metricProblems.textContent = String(state.problems.length);
+  const completed = state.progress.completedProblemIds.length;
+  const percent = calculateProgress(completed, state.problems.length);
 
-  if (!state.problems.length) {
-    progressSummary.textContent = "Прогрес стане доступним після запуску backend API.";
-    return;
+  setText(elements.progressValue, `${percent}%`);
+  setText(elements.metricProgress, `${percent}%`);
+  setText(elements.metricModules, String(state.modules.length));
+  setText(elements.metricProblems, String(state.problems.length));
+
+  if (elements.progressFill) {
+    elements.progressFill.style.width = `${percent}%`;
   }
 
-  if (!state.completed.length) {
-    progressSummary.textContent = "Серверний профіль підключено, але ще немає завершених задач.";
-    return;
+  if (elements.progressSummary) {
+    if (!state.problems.length) {
+      elements.progressSummary.textContent = "Прогрес стане доступним після запуску backend API.";
+    } else if (!completed) {
+      elements.progressSummary.textContent = "Ще немає завершених задач. Почніть із будь-якої теми.";
+    } else {
+      elements.progressSummary.textContent = `Опрацьовано ${completed} з ${state.problems.length} задач. Перевірок виконано: ${state.progress.checkedCount}.`;
+    }
   }
 
-  progressSummary.textContent = `Опрацьовано ${state.completed.length} з ${state.problems.length} задач. Перевірок виконано: ${state.checked}.`;
+  if (elements.progressStats) {
+    elements.progressStats.innerHTML = `
+      <article class="stat-card"><strong>${state.modules.length}</strong><span>тем</span></article>
+      <article class="stat-card"><strong>${state.problems.length}</strong><span>задач</span></article>
+      <article class="stat-card"><strong>${completed}</strong><span>завершено</span></article>
+      <article class="stat-card"><strong>${state.progress.checkedCount}</strong><span>перевірок</span></article>
+    `;
+  }
+
+  if (elements.completedList) {
+    const completedProblems = state.progress.completedProblemIds
+      .map((problemId) => getProblemById(problemId))
+      .filter(Boolean);
+
+    elements.completedList.innerHTML = completedProblems.length
+      ? completedProblems.map((problem) => `<li>${problem.topic}: ${problem.title}</li>`).join("")
+      : `<li>Ще немає завершених задач.</li>`;
+  }
+
+  if (elements.attemptsList) {
+    const attempts = [...(state.progress.attempts || [])].slice(-10).reverse();
+    elements.attemptsList.innerHTML = attempts.length
+      ? attempts.map((attempt) => {
+          const problem = getProblemById(attempt.problemId);
+          return `
+            <li>
+              <strong>${problem?.title || attempt.problemId}</strong>
+              <span>${attempt.correct ? "Правильно" : "Потрібна ще спроба"}</span>
+            </li>
+          `;
+        }).join("")
+      : `<li>Спроб ще не було.</li>`;
+  }
 }
 
 async function markCurrentProblemComplete() {
-  if (!state.activeProblemId || state.completed.includes(state.activeProblemId)) {
+  if (!state.activeProblemId || state.progress.completedProblemIds.includes(state.activeProblemId)) {
     return;
   }
 
@@ -279,14 +500,17 @@ async function markCurrentProblemComplete() {
     body: JSON.stringify({ problemId: state.activeProblemId })
   });
 
-  state.completed = result.completedProblemIds;
-  state.checked = result.checkedCount;
+  state.progress = {
+    ...state.progress,
+    ...result,
+    attempts: state.progress.attempts
+  };
   updateProgress();
 }
 
 async function handleAnswerCheck(event) {
   event.preventDefault();
-  const userAnswer = answerInput.value;
+  const userAnswer = elements.answerInput?.value || "";
 
   if (!userAnswer.trim()) {
     setFeedback("error", "Спочатку введіть відповідь, а потім запускайте перевірку.");
@@ -301,77 +525,104 @@ async function handleAnswerCheck(event) {
     })
   });
 
-  state.checked = result.progress.checkedCount;
-  state.completed = result.progress.completedProblemIds;
+  state.progress = result.progress;
   setFeedback(result.correct ? "success" : "error", result.message);
   updateProgress();
 }
 
 function bindEvents() {
-  moduleList.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-module-id]");
-    if (!button) {
-      return;
-    }
+  if (elements.moduleList) {
+    elements.moduleList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-module-id]");
+      if (!button) {
+        return;
+      }
 
-    state.activeModule = button.dataset.moduleId;
-    renderModules();
-  });
+      state.activeModule = button.dataset.moduleId;
+      syncActiveProblemForModule(state.activeModule);
+      renderModules();
+      renderWorkspace();
+    });
+  }
 
-  problemSelect.addEventListener("change", (event) => {
-    if (!event.target.value) {
-      return;
-    }
+  if (elements.problemSelect) {
+    elements.problemSelect.addEventListener("change", (event) => {
+      if (!event.target.value) {
+        return;
+      }
 
-    state.activeProblemId = event.target.value;
-    state.stepIndex = 0;
-    renderWorkspace();
-    analyzeExpression(getProblemById(state.activeProblemId)?.prompt || "");
-  });
+      state.activeProblemId = event.target.value;
+      state.activeModule = getProblemById(state.activeProblemId)?.moduleId || state.activeModule;
+      state.stepIndex = 0;
+      renderWorkspace();
+      analyzeExpression(getProblemById(state.activeProblemId)?.prompt || "");
+    });
+  }
 
-  document.querySelector("#practice-form").addEventListener("submit", async (event) => {
-    try {
-      await handleAnswerCheck(event);
-    } catch {
-      setFeedback("error", "Не вдалося звернутися до сервера. Перевірте, чи запущений backend API.");
-    }
-  });
+  const practiceForm = document.querySelector("#practice-form");
+  if (practiceForm) {
+    practiceForm.addEventListener("submit", async (event) => {
+      try {
+        await handleAnswerCheck(event);
+      } catch {
+        setFeedback("error", "Не вдалося звернутися до сервера. Перевірте, чи запущений backend API.");
+      }
+    });
+  }
 
-  document.querySelector("#mark-complete").addEventListener("click", async () => {
-    try {
-      await markCurrentProblemComplete();
-      setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
-    } catch {
-      setFeedback("error", "Не вдалося оновити серверний прогрес.");
-    }
-  });
+  const markCompleteButton = document.querySelector("#mark-complete");
+  if (markCompleteButton) {
+    markCompleteButton.addEventListener("click", async () => {
+      try {
+        await markCurrentProblemComplete();
+        setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
+      } catch {
+        setFeedback("error", "Не вдалося оновити серверний прогрес.");
+      }
+    });
+  }
 
-  prevStepButton.addEventListener("click", () => {
-    state.stepIndex = Math.max(0, state.stepIndex - 1);
-    renderWorkspace();
-  });
+  if (elements.prevStepButton) {
+    elements.prevStepButton.addEventListener("click", () => {
+      state.stepIndex = Math.max(0, state.stepIndex - 1);
+      renderWorkspace();
+    });
+  }
 
-  nextStepButton.addEventListener("click", () => {
-    const problem = getProblemById(state.activeProblemId);
-    if (!problem) {
-      return;
-    }
+  if (elements.nextStepButton) {
+    elements.nextStepButton.addEventListener("click", () => {
+      const problem = getProblemById(state.activeProblemId);
+      if (!problem) {
+        return;
+      }
 
-    state.stepIndex = state.stepIndex >= problem.steps.length - 1 ? 0 : state.stepIndex + 1;
-    renderWorkspace();
-  });
+      state.stepIndex = state.stepIndex >= problem.steps.length - 1 ? 0 : state.stepIndex + 1;
+      renderWorkspace();
+    });
+  }
 
-  solverForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const expression = solverExpressionInput.value.trim();
+  if (elements.solverForm) {
+    elements.solverForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const expression = elements.solverExpressionInput?.value.trim() || "";
 
-    if (!expression) {
-      setSolverStatus("error", "Спочатку введіть вираз для аналізу.");
-      return;
-    }
+      if (!expression) {
+        setSolverStatus("error", "Спочатку введіть вираз для аналізу.");
+        return;
+      }
 
-    await analyzeExpression(expression);
-  });
+      await analyzeExpression(expression);
+    });
+  }
+}
+
+function renderAll() {
+  renderHeroStats();
+  renderModules();
+  renderTopicsGrid();
+  renderProblemSelect();
+  renderWorkspace();
+  updateProgress();
 }
 
 async function bootstrap() {
@@ -379,19 +630,21 @@ async function bootstrap() {
 
   try {
     await initializeData();
-    renderModules();
-    renderProblemSelect();
-    renderWorkspace();
-    updateProgress();
-    await analyzeExpression(getProblemById(state.activeProblemId)?.prompt || "");
-    setFeedback("neutral", "Підключено API-сервер. Відповіді та прогрес синхронізуються через backend.");
+    renderAll();
+    if (elements.feedbackBox) {
+      setFeedback("neutral", "Підключено API-сервер. Відповіді та прогрес синхронізуються через backend.");
+    }
+    if (elements.solverExpressionInput) {
+      await analyzeExpression(getProblemById(state.activeProblemId)?.prompt || elements.solverExpressionInput.value || "");
+    }
   } catch {
-    renderModules();
-    renderProblemSelect();
-    renderWorkspace();
-    updateProgress();
-    setFeedback("error", "Не вдалося завантажити навчальні дані. Запустіть backend і оновіть сторінку.");
-    setSolverStatus("error", "Підмодуль аналізу недоступний, доки не запущено backend API.");
+    renderAll();
+    if (elements.feedbackBox) {
+      setFeedback("error", "Не вдалося завантажити навчальні дані. Запустіть backend і оновіть сторінку.");
+    }
+    if (elements.solverStatus) {
+      setSolverStatus("error", "Підмодуль аналізу недоступний, доки не запущено backend API.");
+    }
   }
 }
 

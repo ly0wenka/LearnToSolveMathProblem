@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathMentor Flow — Розбір</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero compact-hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">M</span>
+          <div>
+            <p class="eyebrow">Math Learning Platform</p>
+            <h1>MathMentor Flow</h1>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Головна</a>
+          <a class="nav-link" href="topics.html">Теми</a>
+          <a class="nav-link" href="practice.html">Практика</a>
+          <a class="nav-link active" href="solver.html">Розбір</a>
+          <a class="nav-link" href="progress.html">Прогрес</a>
+        </div>
+      </nav>
+      <div class="page-intro">
+        <p class="section-tag">Calc engine</p>
+        <h2>Автоматичний розбір виразу через підмодуль <code>calc</code></h2>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="practice-grid">
+          <form class="practice-card" id="solver-form">
+            <label for="solver-expression">Вираз для аналізу</label>
+            <input id="solver-expression" type="text" placeholder="Наприклад: 2x+7=19">
+            <div class="answer-example" id="solver-hint">
+              Введіть математичний вираз або рівняння, щоб отримати доступні кроки перетворення.
+            </div>
+            <button class="primary-button" type="submit">Побудувати кроки</button>
+          </form>
+
+          <article class="practice-card feedback-card">
+            <p class="workspace-tag">Результат аналізу</p>
+            <div id="solver-status" class="feedback-box neutral">Введіть вираз і запустіть аналіз.</div>
+            <div class="solver-result">
+              <p class="workspace-tag">Поточний вираз</p>
+              <div id="solver-expression-view" class="formula-item">—</div>
+            </div>
+            <div class="solver-branches">
+              <p class="workspace-tag">Доступні кроки</p>
+              <div id="solver-branches-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js?v=3"></script>
+</body>
+</html>

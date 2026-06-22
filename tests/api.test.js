@@ -29,7 +29,28 @@ test("GET /api/modules returns learning modules", async () => {
 
     assert.equal(response.status, 200);
     assert.ok(Array.isArray(payload.items));
-    assert.ok(payload.items.length >= 4);
+    assert.ok(payload.items.length >= 20);
+  } finally {
+    await app.close();
+  }
+});
+
+test("GET /api/problems returns expanded tasks for many themes", async () => {
+  const app = await startTestServer();
+
+  try {
+    const response = await fetch(`${app.baseUrl}/api/problems`);
+    const payload = await response.json();
+
+    assert.equal(response.status, 200);
+    assert.ok(Array.isArray(payload.items));
+    assert.ok(payload.items.length >= 60);
+    assert.ok(payload.items.some((problem) => problem.moduleId === "linear"));
+    assert.ok(payload.items.some((problem) => problem.moduleId === "functions"));
+    assert.ok(payload.items.some((problem) => problem.moduleId === "geometry"));
+    assert.ok(payload.items.some((problem) => problem.moduleId === "logarithms"));
+    assert.ok(payload.items.some((problem) => problem.moduleId === "vectors"));
+    assert.ok(payload.items.some((problem) => problem.moduleId === "exam"));
   } finally {
     await app.close();
   }
@@ -43,7 +64,7 @@ test("POST /api/progress/check marks a correct answer", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        problemId: "eq-1",
+        problemId: "linear-1",
         answer: "6"
       })
     });
@@ -53,7 +74,7 @@ test("POST /api/progress/check marks a correct answer", async () => {
     assert.equal(response.status, 200);
     assert.equal(payload.correct, true);
     assert.equal(payload.progress.checkedCount, 1);
-    assert.deepEqual(payload.progress.completedProblemIds, ["eq-1"]);
+    assert.deepEqual(payload.progress.completedProblemIds, ["linear-1"]);
   } finally {
     await app.close();
   }
@@ -67,14 +88,14 @@ test("POST /api/progress/complete stores manual completion", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        problemId: "geo-1"
+        problemId: "geometry-1"
       })
     });
 
     const payload = await response.json();
 
     assert.equal(response.status, 200);
-    assert.deepEqual(payload.completedProblemIds, ["geo-1"]);
+    assert.deepEqual(payload.completedProblemIds, ["geometry-1"]);
   } finally {
     await app.close();
   }
