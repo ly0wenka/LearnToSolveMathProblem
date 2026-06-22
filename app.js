@@ -190,8 +190,50 @@ const progressSummary = document.querySelector("#progress-summary");
 const metricModules = document.querySelector("#metric-modules");
 const metricProblems = document.querySelector("#metric-problems");
 const metricProgress = document.querySelector("#metric-progress");
+const formulaSectionTitle = document.querySelector("#formula-section-title");
+const formulaSectionDescription = document.querySelector("#formula-section-description");
+const formulaList = document.querySelector("#formula-list");
 const prevStepButton = document.querySelector("#prev-step");
 const nextStepButton = document.querySelector("#next-step");
+
+const formulasByTopic = {
+  "Лінійні рівняння": {
+    section: "Алгебра: лінійні рівняння",
+    description: "Ізолюємо змінну та виконуємо однакові операції з обома частинами рівняння.",
+    formulas: [
+      "ax + b = c",
+      "ax = c - b",
+      "x = (c - b) / a"
+    ]
+  },
+  "Квадратні рівняння": {
+    section: "Алгебра: квадратні рівняння",
+    description: "Обчислюємо дискримінант і за ним визначаємо кількість та значення коренів.",
+    formulas: [
+      "ax² + bx + c = 0",
+      "D = b² - 4ac",
+      "x₁,₂ = (-b ± √D) / 2a"
+    ]
+  },
+  "Функції": {
+    section: "Алгебра: лінійна функція",
+    description: "Щоб знайти нуль функції, потрібно прирівняти її значення до нуля.",
+    formulas: [
+      "y = kx + b",
+      "0 = kx + b",
+      "x = -b / k"
+    ]
+  },
+  "Геометрія": {
+    section: "Планіметрія",
+    description: "Для базових геометричних задач спершу визначаємо відомі величини і підбираємо формулу.",
+    formulas: [
+      "S = a · b",
+      "P = 2(a + b)",
+      "S△ = (1 / 2) · a · h"
+    ]
+  }
+};
 
 function readLocalProgress() {
   try {
@@ -293,6 +335,11 @@ function renderProblemSelect() {
 function renderWorkspace() {
   const problem = getProblemById(state.activeProblemId);
   const currentStep = problem.steps[state.stepIndex] || problem.steps[0];
+  const formulaInfo = formulasByTopic[problem.topic] || {
+    section: problem.topic,
+    description: "Для цієї теми можна додати окремий набір формул і правил розв'язання.",
+    formulas: ["Формули буде визначено для обраної теми."]
+  };
 
   workspaceTitle.textContent = problem.title;
   workspaceProblem.textContent = problem.prompt;
@@ -302,6 +349,11 @@ function renderWorkspace() {
   stepTitle.textContent = currentStep.title;
   stepDescription.textContent = currentStep.description;
   stepTip.textContent = currentStep.tip;
+  formulaSectionTitle.textContent = formulaInfo.section;
+  formulaSectionDescription.textContent = formulaInfo.description;
+  formulaList.innerHTML = formulaInfo.formulas
+    .map((formula) => `<div class="formula-item">${formula}</div>`)
+    .join("");
 
   prevStepButton.disabled = state.stepIndex === 0;
   nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
