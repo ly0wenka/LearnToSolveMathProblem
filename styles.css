@@ -433,6 +433,15 @@ label {
   gap: 14px;
 }
 
+.answer-example {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(217, 108, 61, 0.08);
+  border: 1px solid rgba(217, 108, 61, 0.18);
+  color: var(--accent-strong);
+  line-height: 1.5;
+}
+
 label {
   margin-bottom: -6px;
 }

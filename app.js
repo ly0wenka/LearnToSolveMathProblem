@@ -82,7 +82,7 @@ const fallbackProblems = [
     topic: "Квадратні рівняння",
     level: "Середній",
     title: "Розв'яжіть квадратне рівняння",
-    prompt: "x^2 - 5x + 6 = 0",
+    prompt: "x² - 5x + 6 = 0",
     answer: "x1 = 2, x2 = 3",
     variants: ["2,3", "x1=2 x2=3", "x1 = 2, x2 = 3", "2 і 3"],
     steps: [
@@ -93,7 +93,7 @@ const fallbackProblems = [
       },
       {
         title: "Обчисліть дискримінант",
-        description: "D = b^2 - 4ac = 25 - 24 = 1.",
+        description: "D = b² - 4ac = 25 - 24 = 1.",
         tip: "Додатний дискримінант означає два різні дійсні корені."
       },
       {
@@ -145,17 +145,40 @@ const fallbackProblems = [
       },
       {
         title: "Застосуйте формулу",
-        description: "Площа прямокутника S = a * b.",
+        description: "Площа прямокутника S = a · b.",
         tip: "Перемножте дві сторони фігури."
       },
       {
         title: "Обчисліть результат",
-        description: "S = 5 * 8 = 40 см².",
+        description: "S = 5 · 8 = 40 см².",
         tip: "Не забудьте зазначити одиниці вимірювання у письмовому розв'язанні."
       }
     ]
   }
 ];
+
+const formulasByTopic = {
+  "Лінійні рівняння": {
+    section: "Алгебра: лінійні рівняння",
+    description: "Ізолюємо змінну та виконуємо однакові операції з обома частинами рівняння.",
+    formulas: ["ax + b = c", "ax = c - b", "x = (c - b) / a"]
+  },
+  "Квадратні рівняння": {
+    section: "Алгебра: квадратні рівняння",
+    description: "Обчислюємо дискримінант і за ним визначаємо кількість та значення коренів.",
+    formulas: ["ax² + bx + c = 0", "D = b² - 4ac", "x₁,₂ = (-b ± √D) / 2a"]
+  },
+  "Функції": {
+    section: "Алгебра: лінійна функція",
+    description: "Щоб знайти нуль функції, потрібно прирівняти її значення до нуля.",
+    formulas: ["y = kx + b", "0 = kx + b", "x = -b / k"]
+  },
+  "Геометрія": {
+    section: "Планіметрія",
+    description: "Для базових геометричних задач спершу визначаємо відомі величини і підбираємо формулу.",
+    formulas: ["S = a · b", "P = 2(a + b)", "S△ = 1/2 · a · h"]
+  }
+};
 
 const apiBase = "http://localhost:3000/api";
 const localStorageKey = "mathmentor-flow-progress";
@@ -181,7 +204,11 @@ const stepIndicator = document.querySelector("#step-indicator");
 const stepTitle = document.querySelector("#step-title");
 const stepDescription = document.querySelector("#step-description");
 const stepTip = document.querySelector("#step-tip");
+const formulaSectionTitle = document.querySelector("#formula-section-title");
+const formulaSectionDescription = document.querySelector("#formula-section-description");
+const formulaList = document.querySelector("#formula-list");
 const problemSelect = document.querySelector("#problem-select");
+const answerExample = document.querySelector("#answer-example");
 const answerInput = document.querySelector("#answer-input");
 const feedbackBox = document.querySelector("#feedback-box");
 const progressValue = document.querySelector("#progress-value");
@@ -190,50 +217,8 @@ const progressSummary = document.querySelector("#progress-summary");
 const metricModules = document.querySelector("#metric-modules");
 const metricProblems = document.querySelector("#metric-problems");
 const metricProgress = document.querySelector("#metric-progress");
-const formulaSectionTitle = document.querySelector("#formula-section-title");
-const formulaSectionDescription = document.querySelector("#formula-section-description");
-const formulaList = document.querySelector("#formula-list");
 const prevStepButton = document.querySelector("#prev-step");
 const nextStepButton = document.querySelector("#next-step");
-
-const formulasByTopic = {
-  "Лінійні рівняння": {
-    section: "Алгебра: лінійні рівняння",
-    description: "Ізолюємо змінну та виконуємо однакові операції з обома частинами рівняння.",
-    formulas: [
-      "ax + b = c",
-      "ax = c - b",
-      "x = (c - b) / a"
-    ]
-  },
-  "Квадратні рівняння": {
-    section: "Алгебра: квадратні рівняння",
-    description: "Обчислюємо дискримінант і за ним визначаємо кількість та значення коренів.",
-    formulas: [
-      "ax² + bx + c = 0",
-      "D = b² - 4ac",
-      "x₁,₂ = (-b ± √D) / 2a"
-    ]
-  },
-  "Функції": {
-    section: "Алгебра: лінійна функція",
-    description: "Щоб знайти нуль функції, потрібно прирівняти її значення до нуля.",
-    formulas: [
-      "y = kx + b",
-      "0 = kx + b",
-      "x = -b / k"
-    ]
-  },
-  "Геометрія": {
-    section: "Планіметрія",
-    description: "Для базових геометричних задач спершу визначаємо відомі величини і підбираємо формулу.",
-    formulas: [
-      "S = a · b",
-      "P = 2(a + b)",
-      "S△ = (1 / 2) · a · h"
-    ]
-  }
-};
 
 function readLocalProgress() {
   try {
@@ -243,10 +228,7 @@ function readLocalProgress() {
       checked: Number.isFinite(parsed.checked) ? parsed.checked : 0
     };
   } catch {
-    return {
-      completed: [],
-      checked: 0
-    };
+    return { completed: [], checked: 0 };
   }
 }
 
@@ -354,6 +336,10 @@ function renderWorkspace() {
   formulaList.innerHTML = formulaInfo.formulas
     .map((formula) => `<div class="formula-item">${formula}</div>`)
     .join("");
+  answerExample.innerHTML = `
+    <strong>Приклад відповіді:</strong> ${problem.answer}
+  `;
+  answerInput.placeholder = `Наприклад: ${problem.answer}`;
 
   prevStepButton.disabled = state.stepIndex === 0;
   nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
@@ -366,7 +352,6 @@ function setFeedback(kind, text) {
 
 function updateProgress() {
   const percent = calculateProgress(state.completed.length, state.problems.length);
-
   progressValue.textContent = `${percent}%`;
   metricProgress.textContent = `${percent}%`;
   progressFill.style.width = `${percent}%`;
@@ -451,7 +436,7 @@ async function handleAnswerCheck(event) {
 }
 
 function bindEvents() {
-  moduleList?.addEventListener("click", (event) => {
+  moduleList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-module-id]");
     if (!button) {
       return;
@@ -461,13 +446,13 @@ function bindEvents() {
     renderModules();
   });
 
-  problemSelect?.addEventListener("change", (event) => {
+  problemSelect.addEventListener("change", (event) => {
     state.activeProblemId = event.target.value;
     state.stepIndex = 0;
     renderWorkspace();
   });
 
-  document.querySelector("#practice-form")?.addEventListener("submit", async (event) => {
+  document.querySelector("#practice-form").addEventListener("submit", async (event) => {
     try {
       await handleAnswerCheck(event);
     } catch {
@@ -475,7 +460,7 @@ function bindEvents() {
     }
   });
 
-  document.querySelector("#mark-complete")?.addEventListener("click", async () => {
+  document.querySelector("#mark-complete").addEventListener("click", async () => {
     try {
       await markCurrentProblemComplete();
       setFeedback("success", "Задачу позначено як опрацьовану. Прогрес оновлено.");
@@ -484,12 +469,12 @@ function bindEvents() {
     }
   });
 
-  prevStepButton?.addEventListener("click", () => {
+  prevStepButton.addEventListener("click", () => {
     state.stepIndex = Math.max(0, state.stepIndex - 1);
     renderWorkspace();
   });
 
-  nextStepButton?.addEventListener("click", () => {
+  nextStepButton.addEventListener("click", () => {
     const problem = getProblemById(state.activeProblemId);
     state.stepIndex = state.stepIndex >= problem.steps.length - 1 ? 0 : state.stepIndex + 1;
     renderWorkspace();

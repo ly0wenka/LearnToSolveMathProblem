@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <div class="page-shell">
@@ -28,8 +28,8 @@
           <p class="section-tag">Проєктування та розробка ПЗ</p>
           <h2>Застосунок для навчання з розв'язання математичних задач</h2>
           <p class="hero-text">
-            Інтерактивне середовище для студентів і школярів, яке поєднує теорію, алгоритми розв'язання,
-            покроковий супровід і самоперевірку.
+            Інтерактивне середовище для студентів і школярів, яке поєднує теорію,
+            алгоритми розв'язання, покроковий супровід і самоперевірку.
           </p>
           <div class="hero-actions">
             <a class="primary-button" href="#modules">Огляд модулів</a>
@@ -37,7 +37,7 @@
           </div>
           <ul class="hero-metrics">
             <li><strong id="metric-modules">4</strong><span>навчальні модулі</span></li>
-            <li><strong id="metric-problems">8</strong><span>практичні задачі</span></li>
+            <li><strong id="metric-problems">4</strong><span>практичні задачі</span></li>
             <li><strong id="metric-progress">0%</strong><span>особистий прогрес</span></li>
           </ul>
         </div>
@@ -54,8 +54,8 @@
           <div class="focus-card">
             <span class="focus-label">Фокус бакалаврської роботи</span>
             <p>
-              Персоналізація навчання, формування математичних компетентностей, візуалізація кроків
-              та аналітика успішності.
+              Персоналізація навчання, формування математичних компетентностей,
+              візуалізація кроків та аналітика успішності.
             </p>
           </div>
         </div>
@@ -89,8 +89,8 @@
               <span id="workspace-level"></span>
             </div>
             <div class="step-controls">
-              <button class="secondary-button" id="prev-step">Назад</button>
-              <button class="primary-button" id="next-step">Наступний крок</button>
+              <button class="secondary-button" id="prev-step" type="button">Назад</button>
+              <button class="primary-button" id="next-step" type="button">Наступний крок</button>
             </div>
           </article>
 
@@ -109,6 +109,7 @@
             <h4 id="formula-section-title"></h4>
             <p id="formula-section-description"></p>
           </article>
+
           <article class="formula-card">
             <p class="workspace-tag">Ключові формули</p>
             <div id="formula-list" class="formula-list"></div>
@@ -125,6 +126,7 @@
           <form class="practice-card" id="practice-form">
             <label for="problem-select">Оберіть задачу</label>
             <select id="problem-select"></select>
+            <div class="answer-example" id="answer-example"></div>
 
             <label for="answer-input">Ваша відповідь</label>
             <input id="answer-input" type="text" placeholder="Наприклад: x = 3">
@@ -151,30 +153,9 @@
           </article>
         </div>
       </section>
-
-      <section class="section architecture">
-        <div class="section-heading">
-          <p class="section-tag">Концепція системи</p>
-          <h3>Що можна показати в пояснювальній записці</h3>
-        </div>
-        <div class="architecture-grid">
-          <article class="architecture-card">
-            <h4>Користувацький рівень</h4>
-            <p>Адаптивний інтерфейс, каталог тем, практикум, покрокова підтримка та особистий кабінет.</p>
-          </article>
-          <article class="architecture-card">
-            <h4>Логічний рівень</h4>
-            <p>Модуль управління контентом, оцінювання відповідей, аналітика прогресу, сценарії навчання.</p>
-          </article>
-          <article class="architecture-card">
-            <h4>Дані та аналітика</h4>
-            <p>База задач, профілі студентів, історія спроб, оцінки складності та рекомендації тем.</p>
-          </article>
-        </div>
-      </section>
     </main>
   </div>
 
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=2"></script>
 </body>
 </html>

@@ -82,7 +82,7 @@ export const problems = [
     topic: "Квадратні рівняння",
     level: "Середній",
     title: "Розв'яжіть квадратне рівняння",
-    prompt: "x^2 - 5x + 6 = 0",
+    prompt: "x² - 5x + 6 = 0",
     answer: "x1 = 2, x2 = 3",
     variants: ["2,3", "x1=2 x2=3", "x1 = 2, x2 = 3", "2 і 3"],
     steps: [
@@ -95,7 +95,7 @@ export const problems = [
       {
         order: 2,
         title: "Обчисліть дискримінант",
-        description: "D = b^2 - 4ac = 25 - 24 = 1.",
+        description: "D = b² - 4ac = 25 - 24 = 1.",
         tip: "Додатний дискримінант означає два різні дійсні корені."
       },
       {
@@ -155,13 +155,13 @@ export const problems = [
       {
         order: 2,
         title: "Застосуйте формулу",
-        description: "Площа прямокутника S = a * b.",
+        description: "Площа прямокутника S = a · b.",
         tip: "Перемножте дві сторони фігури."
       },
       {
         order: 3,
         title: "Обчисліть результат",
-        description: "S = 5 * 8 = 40 см².",
+        description: "S = 5 · 8 = 40 см².",
         tip: "Не забудьте зазначити одиниці вимірювання у письмовому розв'язанні."
       }
     ]
