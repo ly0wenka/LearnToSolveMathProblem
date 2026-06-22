@@ -8,6 +8,9 @@ test("solveExpressionWithCalc returns a solution graph", async () => {
   assert.equal(payload.input_expression, "2x+7=19");
   assert.equal(typeof payload.solution_graph.expression_str, "string");
   assert.ok(Array.isArray(payload.solution_graph.available_branches));
+  assert.ok(
+    payload.solution_graph.available_branches.every((branch) => !branch.formula_name.includes("Решить"))
+  );
 });
 
 test("solveExpressionWithCalc supports quadratic expressions", async () => {

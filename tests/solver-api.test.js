@@ -30,6 +30,9 @@ test("GET /api/solver returns calc graph", async () => {
     assert.equal(response.status, 200);
     assert.equal(payload.input_expression, "2x+7=19");
     assert.ok(Array.isArray(payload.solution_graph.available_branches));
+    assert.ok(
+      payload.solution_graph.available_branches.every((branch) => !branch.step_description.includes("Раскрытие"))
+    );
   } finally {
     await app.close();
   }
