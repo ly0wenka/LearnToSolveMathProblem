@@ -13,9 +13,6 @@ const translationPairs = [
   ["[Решить относительно y]", "[Розв'язати відносно y]"],
   ["Раскрытие скобок", "Розкриття дужок"],
   ["Преобразование", "Перетворення"],
-  ["Текущее выражение", "Поточний вираз"],
-  ["Результат анализа", "Результат аналізу"],
-  ["Доступные шаги", "Доступні кроки"],
   ["Решить относительно", "Розв'язати відносно"],
   ["Расчет дискриминанта", "Обчислення дискримінанта"],
   ["Дискриминант", "Дискримінант"],
@@ -31,7 +28,6 @@ const translationPairs = [
   ["Дробь равна нулю, если её числитель равен нулю", "Дріб дорівнює нулю, якщо його чисельник дорівнює нулю"],
   ["Сокращение дроби на общий множитель", "Скорочення дробу на спільний множник"],
   ["Перенос слагаемого через знак равенства", "Перенесення доданка через знак рівності"],
-  ["Решить", "Розв'язати"],
   ["Пусть", "Нехай"],
   ["Получаем уравнение", "Отримуємо рівняння"],
   ["По определению логарифма переходим к равносильному уравнению", "За означенням логарифма переходимо до рівносильного рівняння"],
@@ -40,8 +36,7 @@ const translationPairs = [
   ["Избавляемся от радикала, возводя обе части уравнения в квадрат", "Позбавляємося радикала, підносячи обидві частини рівняння до квадрата"],
   ["Уединяем один из радикалов", "Відокремлюємо один із радикалів"],
   ["переносим", "переносимо"],
-  ["в правую часть", "у праву частину"],
-  ["Найдено", "Знайдено"]
+  ["в правую часть", "у праву частину"]
 ];
 
 function translateText(value) {
@@ -56,6 +51,55 @@ function translateText(value) {
   return translated;
 }
 
+function isNumberToken(value) {
+  return /^-?\d+(?:\.\d+)?$/.test(value);
+}
+
+function humanizeStep(formulaName, stepDescription) {
+  const translatedFormula = translateText(formulaName);
+  const translatedDescription = translateText(stepDescription);
+
+  const compact = stepDescription.replace(/\s+/g, "");
+
+  if (/^\d+\*[a-zA-Zа-яА-Я]+->\d+[a-zA-Zа-яА-Я]+$/.test(compact)) {
+    return {
+      formulaName: translatedFormula.replace("Розкриття дужок", "Спрощення запису добутку"),
+      stepDescription: translatedDescription.replace("Розкриття дужок:", "Спрощуємо запис добутку:")
+    };
+  }
+
+  const arithmeticMatch = compact.match(/^(.+?)([+\-*/])(.+?)=(.+)$/);
+  if (arithmeticMatch) {
+    const [, left, operator, right, result] = arithmeticMatch;
+    if (isNumberToken(left) && isNumberToken(right) && isNumberToken(result)) {
+      const labels = {
+        "+": "Обчислення суми",
+        "-": "Обчислення різниці",
+        "*": "Обчислення добутку",
+        "/": "Обчислення частки"
+      };
+
+      const verbLabels = {
+        "+": "Обчислюємо суму",
+        "-": "Обчислюємо різницю",
+        "*": "Обчислюємо добуток",
+        "/": "Обчислюємо частку"
+      };
+
+      const prettyExpr = `${left} ${operator} ${right} = ${result}`;
+      return {
+        formulaName: translatedFormula.replace("Перетворення", labels[operator] || "Обчислення"),
+        stepDescription: `${verbLabels[operator] || "Обчислюємо"}: ${prettyExpr}`
+      };
+    }
+  }
+
+  return {
+    formulaName: translatedFormula,
+    stepDescription: translatedDescription
+  };
+}
+
 function translateGraph(node) {
   if (!node || typeof node !== "object") {
     return node;
@@ -65,12 +109,15 @@ function translateGraph(node) {
     ...node,
     expression_str: translateText(node.expression_str),
     available_branches: Array.isArray(node.available_branches)
-      ? node.available_branches.map((branch) => ({
-          ...branch,
-          formula_name: translateText(branch.formula_name),
-          step_description: translateText(branch.step_description),
-          next_node: translateGraph(branch.next_node)
-        }))
+      ? node.available_branches.map((branch) => {
+          const normalized = humanizeStep(branch.formula_name, branch.step_description);
+          return {
+            ...branch,
+            formula_name: normalized.formulaName,
+            step_description: normalized.stepDescription,
+            next_node: translateGraph(branch.next_node)
+          };
+        })
       : []
   };
 }
@@ -132,7 +179,7 @@ function runPython(pythonCommand, expression) {
           ...parsed,
           solution_graph: translateGraph(parsed.solution_graph)
         });
-      } catch (error) {
+      } catch {
         rejectPromise(new Error(`Invalid solver JSON: ${stdout.trim()}`));
       }
     });

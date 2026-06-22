@@ -38,6 +38,24 @@ test("GET /api/solver returns calc graph", async () => {
   }
 });
 
+test("GET /api/solver returns pedagogical Ukrainian step labels", async () => {
+  const app = await startTestServer();
+
+  try {
+    const response = await fetch(`${app.baseUrl}/api/solver?expression=${encodeURIComponent("2x+7=19+767868")}`);
+    const payload = await response.json();
+
+    assert.equal(response.status, 200);
+    assert.ok(
+      payload.solution_graph.available_branches.some((branch) =>
+        branch.step_description.includes("Обчислюємо суму")
+      )
+    );
+  } finally {
+    await app.close();
+  }
+});
+
 test("GET /api/solver validates missing expression", async () => {
   const app = await startTestServer();
 

@@ -19,3 +19,21 @@ test("solveExpressionWithCalc supports quadratic expressions", async () => {
   assert.match(payload.solution_graph.expression_str, /x/);
   assert.ok("ast" in payload.solution_graph);
 });
+
+test("solveExpressionWithCalc humanizes trivial multiplication formatting", async () => {
+  const payload = await solveExpressionWithCalc("2x+7=19");
+  const branch = payload.solution_graph.available_branches[0];
+
+  assert.match(branch.formula_name, /Спрощення запису добутку|Розв'язати відносно x/);
+  assert.match(branch.step_description, /Спрощуємо запис добутку|2x/);
+});
+
+test("solveExpressionWithCalc classifies numeric addition correctly", async () => {
+  const payload = await solveExpressionWithCalc("2x+7=19+767868");
+  const additionBranch = payload.solution_graph.available_branches.find((branch) =>
+    branch.step_description.includes("Обчислюємо суму")
+  );
+
+  assert.ok(additionBranch);
+  assert.match(additionBranch.formula_name, /Обчислення суми/);
+});
