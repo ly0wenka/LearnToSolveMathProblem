@@ -108,7 +108,7 @@ const fallbackProblems = [
     topic: "Функції",
     level: "Середній",
     title: "Нулі функції",
-    prompt: "Знайдіть нуль функції y = 3x - 9",
+    prompt: "3x - 9 = 0",
     answer: "x = 3",
     variants: ["3", "x=3", "x = 3"],
     steps: [
@@ -134,7 +134,7 @@ const fallbackProblems = [
     topic: "Геометрія",
     level: "Легкий",
     title: "Площа прямокутника",
-    prompt: "Знайдіть площу прямокутника зі сторонами 5 см і 8 см",
+    prompt: "5 * 8",
     answer: "40",
     variants: ["40", "40 см2", "40 см^2"],
     steps: [
@@ -219,6 +219,12 @@ const metricProblems = document.querySelector("#metric-problems");
 const metricProgress = document.querySelector("#metric-progress");
 const prevStepButton = document.querySelector("#prev-step");
 const nextStepButton = document.querySelector("#next-step");
+const solverForm = document.querySelector("#solver-form");
+const solverExpressionInput = document.querySelector("#solver-expression");
+const solverHint = document.querySelector("#solver-hint");
+const solverStatus = document.querySelector("#solver-status");
+const solverExpressionView = document.querySelector("#solver-expression-view");
+const solverBranchesList = document.querySelector("#solver-branches-list");
 
 function readLocalProgress() {
   try {
@@ -314,6 +320,48 @@ function renderProblemSelect() {
   `).join("");
 }
 
+function setFeedback(kind, text) {
+  feedbackBox.className = `feedback-box ${kind}`;
+  feedbackBox.textContent = text;
+}
+
+function setSolverStatus(kind, text) {
+  solverStatus.className = `feedback-box ${kind}`;
+  solverStatus.textContent = text;
+}
+
+function renderSolverBranches(branches) {
+  if (!branches.length) {
+    solverBranchesList.innerHTML = `<div class="solver-branch-card">Для цього виразу підмодуль не повернув окремих гілок.</div>`;
+    return;
+  }
+
+  solverBranchesList.innerHTML = branches.map((branch) => `
+    <article class="solver-branch-card">
+      <h4>${branch.formula_name}</h4>
+      <p>${branch.step_description}</p>
+      <div class="solver-next">${branch.next_node?.expression_str || "Кінцевий стан"}</div>
+    </article>
+  `).join("");
+}
+
+async function analyzeExpression(expression) {
+  setSolverStatus("neutral", "Виконується аналіз виразу через підмодуль calc...");
+
+  try {
+    const payload = await requestJson(`/solver?expression=${encodeURIComponent(expression)}`);
+    const graph = payload.solution_graph || {};
+    const branches = graph.available_branches || [];
+    solverExpressionView.textContent = graph.expression_str || payload.input_expression || expression;
+    renderSolverBranches(branches);
+    setSolverStatus("success", `Аналіз виконано. Знайдено ${branches.length} доступних кроків.`);
+  } catch {
+    solverExpressionView.textContent = expression;
+    renderSolverBranches([]);
+    setSolverStatus("error", "Не вдалося отримати розбір із підмодуля calc. Перевірте backend та Python.");
+  }
+}
+
 function renderWorkspace() {
   const problem = getProblemById(state.activeProblemId);
   const currentStep = problem.steps[state.stepIndex] || problem.steps[0];
@@ -333,21 +381,14 @@ function renderWorkspace() {
   stepTip.textContent = currentStep.tip;
   formulaSectionTitle.textContent = formulaInfo.section;
   formulaSectionDescription.textContent = formulaInfo.description;
-  formulaList.innerHTML = formulaInfo.formulas
-    .map((formula) => `<div class="formula-item">${formula}</div>`)
-    .join("");
-  answerExample.innerHTML = `
-    <strong>Приклад відповіді:</strong> ${problem.answer}
-  `;
+  formulaList.innerHTML = formulaInfo.formulas.map((formula) => `<div class="formula-item">${formula}</div>`).join("");
+  answerExample.innerHTML = `<strong>Приклад відповіді:</strong> ${problem.answer}`;
   answerInput.placeholder = `Наприклад: ${problem.answer}`;
+  solverExpressionInput.value = problem.prompt;
+  solverHint.innerHTML = `<strong>Вираз задачі:</strong> ${problem.prompt}`;
 
   prevStepButton.disabled = state.stepIndex === 0;
   nextStepButton.textContent = state.stepIndex === problem.steps.length - 1 ? "До початку" : "Наступний крок";
-}
-
-function setFeedback(kind, text) {
-  feedbackBox.className = `feedback-box ${kind}`;
-  feedbackBox.textContent = text;
 }
 
 function updateProgress() {
@@ -450,6 +491,7 @@ function bindEvents() {
     state.activeProblemId = event.target.value;
     state.stepIndex = 0;
     renderWorkspace();
+    analyzeExpression(getProblemById(state.activeProblemId).prompt);
   });
 
   document.querySelector("#practice-form").addEventListener("submit", async (event) => {
@@ -479,6 +521,18 @@ function bindEvents() {
     state.stepIndex = state.stepIndex >= problem.steps.length - 1 ? 0 : state.stepIndex + 1;
     renderWorkspace();
   });
+
+  solverForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const expression = solverExpressionInput.value.trim();
+
+    if (!expression) {
+      setSolverStatus("error", "Спочатку введіть вираз для аналізу.");
+      return;
+    }
+
+    await analyzeExpression(expression);
+  });
 }
 
 async function bootstrap() {
@@ -488,6 +542,7 @@ async function bootstrap() {
   renderProblemSelect();
   renderWorkspace();
   updateProgress();
+  analyzeExpression(getProblemById(state.activeProblemId).prompt);
 
   if (state.remoteMode) {
     setFeedback("neutral", "Підключено API-сервер. Відповіді та прогрес синхронізуються через backend.");

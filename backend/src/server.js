@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { modules, problems } from "./content.js";
 import { FileProgressStore } from "./store.js";
 import { isCorrectAnswer } from "../../shared/learning-core.js";
+import { solveExpressionWithCalc } from "./calc-service.js";
 
 const port = Number(process.env.PORT || 3000);
 const defaultStore = new FileProgressStore(new URL("../storage/progress.json", import.meta.url).pathname);
@@ -61,6 +62,19 @@ export async function handleRequest(request, response, store = defaultStore) {
 
   if (request.method === "GET" && url.pathname === "/api/problems") {
     sendJson(response, 200, { items: problems });
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/api/solver") {
+    const expression = url.searchParams.get("expression");
+
+    if (!expression) {
+      sendJson(response, 400, { message: "Expression is required." });
+      return;
+    }
+
+    const payload = await solveExpressionWithCalc(expression);
+    sendJson(response, 200, payload);
     return;
   }
 

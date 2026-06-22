@@ -442,6 +442,42 @@ label {
   line-height: 1.5;
 }
 
+.solver-result,
+.solver-branches {
+  display: grid;
+  gap: 10px;
+}
+
+#solver-branches-list {
+  display: grid;
+  gap: 12px;
+}
+
+.solver-branch-card {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(29, 36, 51, 0.08);
+}
+
+.solver-branch-card h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.solver-branch-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.solver-next {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(29, 36, 51, 0.08);
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
 label {
   margin-bottom: -6px;
 }

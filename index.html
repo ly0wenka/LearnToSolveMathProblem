@@ -117,6 +117,38 @@
         </div>
       </section>
 
+      <section class="section" id="calc-engine">
+        <div class="section-heading">
+          <p class="section-tag">Calc Engine</p>
+          <h3>Автоматичний розбір виразу через підмодуль `calc`</h3>
+        </div>
+        <div class="practice-grid">
+          <form class="practice-card" id="solver-form">
+            <label for="solver-expression">Вираз для аналізу</label>
+            <input id="solver-expression" type="text" placeholder="Наприклад: 2x+7=19">
+            <div class="answer-example" id="solver-hint">
+              Можна вибрати задачу вище, а потім автоматично побудувати гілки розв'язання.
+            </div>
+            <button class="primary-button" type="submit">Побудувати кроки</button>
+          </form>
+
+          <article class="practice-card feedback-card">
+            <p class="workspace-tag">Результат аналізу</p>
+            <div id="solver-status" class="feedback-box neutral">
+              Виберіть або введіть вираз і натисніть кнопку побудови.
+            </div>
+            <div class="solver-result">
+              <p class="workspace-tag">Поточний вираз</p>
+              <div id="solver-expression-view" class="formula-item">—</div>
+            </div>
+            <div class="solver-branches">
+              <p class="workspace-tag">Доступні кроки</p>
+              <div id="solver-branches-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section class="section" id="practice">
         <div class="section-heading">
           <p class="section-tag">Практика</p>
